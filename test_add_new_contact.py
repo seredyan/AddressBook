@@ -6,20 +6,20 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest
-from group import Address
+from contact import Contact
 
 
-class TestNewAddress(unittest.TestCase):
+class TestNewContact(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
-    def test_new_address(self):
+    def test_new_contact(self):
         wd = self.wd
         self.home_page(wd)
         self.login(wd, user="admin", password="secret")
-        self.create_contact(wd, Address(name="Georg",
-                                        lastname="Wells", street="Lenina St, 10-11\nVoronezh, Russia",
+        self.create_contact(wd, Contact(name="Georg",
+                                        lastname="Wells", address="Lenina St, 10-11\nVoronezh, Russia",
                                         landphone="555555555", mobile="77777777777", email="dd@mail.ru"))
         self.return_homepage(wd)
         self.logout(wd)
@@ -36,28 +36,28 @@ class TestNewAddress(unittest.TestCase):
     def home_page(self, wd):
         wd.get("http://localhost/addressbook/index.php")
 
-    def create_contact(self, wd, address):
+    def create_contact(self, wd, contact):
         # init adding new address
         wd.find_element_by_link_text("add new").click()
         # fill address firm
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(address.name)
+        wd.find_element_by_name("firstname").send_keys(contact.name)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(address.lastname)
+        wd.find_element_by_name("lastname").send_keys(contact.lastname)
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(address.street)
+        wd.find_element_by_name("address").send_keys(contact.address)
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys(address.landphone)
+        wd.find_element_by_name("home").send_keys(contact.landphone)
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(address.mobile)
+        wd.find_element_by_name("mobile").send_keys(contact.mobile)
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(address.email)
+        wd.find_element_by_name("email").send_keys(contact.email)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
     def return_homepage(self, wd):
