@@ -10,10 +10,6 @@ class Application:
 
   # ниже идут вспомогательные функции
 
-    def open_home_page(self):
-        wd = self.wd
-        wd.get("http://localhost/addressbook/index.php")
-
     def login(self, username, password):
         wd = self.wd
         self.open_home_page()
@@ -24,6 +20,10 @@ class Application:
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
+
+    def open_home_page(self):
+        wd = self.wd
+        wd.get("http://localhost/addressbook/index.php")
 
     def open_groups_page(self):
         wd = self.wd

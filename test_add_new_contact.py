@@ -1,89 +1,80 @@
 # -*- coding: utf-8 -*-
-from selenium import webdriver
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.common.keys import Keys
-# from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException
-import unittest
+from contact_app import Application
+import pytest
 from contact import Contact
 
-
-class TestNewContact(unittest.TestCase):
-    def setUp(self):
-        self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(30)
-
-    def test_new_contact(self):
-        wd = self.wd
-        self.home_page(wd)
-        self.login(wd, user="admin", password="secret")
-        self.create_contact(wd, Contact(name="Georg",
-                                        lastname="Wells", address="Lenina St, 10-11\nVoronezh, Russia",
-                                        landphone="555555555", mobile="77777777777", email="dd@mail.ru"))
-        self.return_homepage(wd)
-        self.logout(wd)
-
-    def login(self, wd, user, password):
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(user)
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
-        wd.find_element_by_xpath("//input[@value='Login']").click()
-
-    def home_page(self, wd):
-        wd.get("http://localhost/addressbook/index.php")
-
-    def create_contact(self, wd, contact):
-        # init adding new address
-        wd.find_element_by_link_text("add new").click()
-        # fill address firm
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(contact.name)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(contact.lastname)
-        wd.find_element_by_name("address").click()
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(contact.address)
-        wd.find_element_by_name("home").click()
-        wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys(contact.landphone)
-        wd.find_element_by_name("mobile").click()
-        wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(contact.mobile)
-        wd.find_element_by_name("email").click()
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(contact.email)
-        wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
-
-    def return_homepage(self, wd):
-        wd.find_element_by_link_text("home page").click()
-
-    def logout(self, wd):
-        wd.find_element_by_link_text("Logout").click()
+@pytest.fixture
+def app(request):
+    fixture = Application()
+    request.addfinalizer(fixture.destroy)
+    return fixture
 
 
-    # def is_element_present(self, how, what):
-    #     try:
-    #         self.wd.find_element(by=how, value=what)
-    #     except NoSuchElementException as e:
-    #         return False
-    #     return True
+
+def test_new_contact(app):
+    app.login(user="admin", password="secret")
+    app.create_contact(Contact(name="Georg",
+                                    lastname="Wells", address="Lenina St, 10-11\nVoronezh, Russia",
+                                    landphone="555555555", mobile="77777777777", email="dd@mail.ru"))
+
+    app.logout()
+
+
+
+
+
+    # def login(self, user, password):
+    #     wd = self.wd
+    #     wd.find_element_by_name("user").click()
+    #     wd.find_element_by_name("user").clear()
+    #     wd.find_element_by_name("user").send_keys(user)
+    #     wd.find_element_by_name("pass").click()
+    #     wd.find_element_by_name("pass").clear()
+    #     wd.find_element_by_name("pass").send_keys(password)
+    #     wd.find_element_by_xpath("//input[@value='Login']").click()
     #
-    # def is_alert_present(self):
-    #     try:
-    #         self.wd.switch_to_alert()
-    #     except NoAlertPresentException as e:
-    #         return False
-    #     return True
+    # def home_page(self, wd):
+    #     wd = self.wd
+    #     wd.get("http://localhost/addressbook/index.php")
+    #
+    # def create_contact(self, contact):
+    #     wd = self.wd
+    #     # open home page
+    #     self.home_page(wd)
+    #     # init adding new address
+    #     wd.find_element_by_link_text("add new").click()
+    #     # fill address firm
+    #     wd.find_element_by_name("firstname").click()
+    #     wd.find_element_by_name("firstname").clear()
+    #     wd.find_element_by_name("firstname").send_keys(contact.name)
+    #     wd.find_element_by_name("lastname").click()
+    #     wd.find_element_by_name("lastname").clear()
+    #     wd.find_element_by_name("lastname").send_keys(contact.lastname)
+    #     wd.find_element_by_name("address").click()
+    #     wd.find_element_by_name("address").clear()
+    #     wd.find_element_by_name("address").send_keys(contact.address)
+    #     wd.find_element_by_name("home").click()
+    #     wd.find_element_by_name("home").clear()
+    #     wd.find_element_by_name("home").send_keys(contact.landphone)
+    #     wd.find_element_by_name("mobile").click()
+    #     wd.find_element_by_name("mobile").clear()
+    #     wd.find_element_by_name("mobile").send_keys(contact.mobile)
+    #     wd.find_element_by_name("email").click()
+    #     wd.find_element_by_name("email").clear()
+    #     wd.find_element_by_name("email").send_keys(contact.email)
+    #     wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+    #
+    # def return_homepage(self):
+    #     wd = self.wd
+    #     wd.find_element_by_link_text("home page").click()
+    #
+    # def logout(self):
+    #     wd = self.wd
+    #     wd.find_element_by_link_text("Logout").click()
+    #
+    #
+    #
+    # def tearDown(self):
+    #     self.wd.quit()
 
-    def tearDown(self):
-        self.wd.quit()
 
-
-if __name__ == "__main__":
-    unittest.main()
