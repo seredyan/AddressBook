@@ -6,7 +6,7 @@ class ContactHelper:
 
 
 
-    def create_contact(self, contact):
+    def create(self, contact):
         wd = self.app.wd
         # open home page
         self.app.open_home_page()    # обращение к фикстуре, где находится метод home_page
@@ -34,9 +34,22 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.return_homepage()
 
+
+    def delete_first_contact(self):
+        wd = self.app.wd
+        self.app.open_home_page()  # обращение к фикстуре, где находится метод home_page
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
+        self.return_homepage()
+
+
+
+
+
     def return_homepage(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home page").click()
+        wd.find_element_by_link_text("home").click()
 
 
 
