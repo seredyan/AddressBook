@@ -8,3 +8,4 @@ class Contact:
         self.landphone = landphone
         self.mobile = mobile
         self.email = email
+
