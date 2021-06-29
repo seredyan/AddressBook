@@ -20,7 +20,7 @@ class ContactHelper:
 
     def delete_first_contact(self):
         wd = self.app.wd
-        # self.app.open_home_page()  # обращение к фикстуре, где находится метод home_page
+        self.app.open_home_page()
         self.select_first_contact()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
@@ -28,30 +28,12 @@ class ContactHelper:
 
 
 
-    def modify_contact_address(self, contact):
+    def modify_contact(self, contact):
         wd = self.app.wd
-        # self.app.open_home_page()  #  ????????             обращение к фикстуре, где находится метод home_page
-        self.select_first_contact()
+        self.app.open_home_page()
+        #self.select_first_contact()
         #wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[4]/td[8]/a/img").click()
         #wd.find_element_by_xpath("//img[@alt='Edit']").click()
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
-        self.fill_contact_form(contact)
-        wd.find_element_by_name("update").click()
-        self.return_homepage()
-
-    def modify_contact_phone(self, contact):
-        wd = self.app.wd
-        # self.app.open_home_page()  #  ????????             обращение к фикстуре, где находится метод home_page
-        self.select_first_contact()
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
-        self.fill_contact_form(contact)
-        wd.find_element_by_name("update").click()
-        self.return_homepage()
-
-    def modify_contact_email(self, contact):
-        wd = self.app.wd
-        # self.app.open_home_page()  #  ????????             обращение к фикстуре, где находится метод home_page
-        self.select_first_contact()
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         self.fill_contact_form(contact)
         wd.find_element_by_name("update").click()
