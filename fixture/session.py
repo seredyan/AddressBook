@@ -25,7 +25,7 @@ class SessionHelper:
 
     def is_logged_in(self):
         wd = self.app.wd
-        time.sleep(0.2)  # добавлено ожидание, чтобы открылась главная страница до начала поиска элемента "Logout"
+        #time.sleep(0.2)  # добавлено ожидание, чтобы открылась главная страница до начала поиска элемента "Logout"-??
         return len(wd.find_elements_by_link_text("Logout")) > 0
 
 

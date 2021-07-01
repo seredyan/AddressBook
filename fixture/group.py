@@ -79,5 +79,26 @@ class GroupHelper:
         wd.find_element_by_link_text("group page").click()
 
 
+    def count(self):
+        wd = self.app.wd
+        self.open_groups_page()
+        return len(wd.find_elements_by_name("selected[]"))
+
+
+
+ ## пробная альтернативная идея
+
+    # def check(self):
+    #     wd = self.app.wd
+    #     self.open_groups_page()
+    #     if wd.find_element_by_name("selected[]") is False:
+    #         self.create(group="test")
+    #         self.delete_first_group()
+    #
+    #     else:
+    #         self.delete_first_group()
+
+
+
 
 
