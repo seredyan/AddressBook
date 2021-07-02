@@ -43,7 +43,8 @@ class GroupHelper:
 
     def open_groups_page(self):
         wd = self.app.wd  # доступ к драйверу осущ через ссылку на основной класс Application (где она общая для всех)
-        wd.find_element_by_link_text("groups").click()
+        if not (wd.current_url.endswith("/group.php") and len(wd.find_elements_by_name("new")) > 0):
+            wd.find_element_by_link_text("groups").click()
 
 
     def select_first_group(self):
@@ -86,18 +87,18 @@ class GroupHelper:
 
 
 
- ## пробная альтернативная идея
-
-    # def check(self):
-    #     wd = self.app.wd
-    #     self.open_groups_page()
-    #     if wd.find_element_by_name("selected[]") is False:
-    #         self.create(group="test")
-    #         self.delete_first_group()
-    #
-    #     else:
-    #         self.delete_first_group()
-
+ # # пробная альтернативная идея (см правильный вариант твета в скайпе)
+ #
+ #    def check(self):
+ #        wd = self.app.wd
+ #        self.open_groups_page()
+ #        if wd.find_element_by_name("selected[]") is False:
+ #            self.create(group="test")  # доработать с аргументами!!!
+ #            self.delete_first_group()
+ #
+ #        else:
+ #            self.delete_first_group()
+ #
 
 
 
