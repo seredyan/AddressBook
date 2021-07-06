@@ -1,4 +1,5 @@
 
+from model.group import Group
 
 class GroupHelper:
     def __init__(self, app):  #
@@ -86,7 +87,6 @@ class GroupHelper:
         return len(wd.find_elements_by_name("selected[]"))
 
 
-
  # # пробная альтернативная идея (см правильный вариант твета в скайпе)
  #
  #    def check(self):
@@ -99,6 +99,20 @@ class GroupHelper:
  #        else:
  #            self.delete_first_group()
  #
+
+    def get_group_list(self):
+        wd = self.app.wd
+        self.open_groups_page()
+        group_list = []
+        for element in wd.find_elements_by_css_selector("span.group"):
+            text = element.text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            group_list.append(Group(name=text, id=id))
+        return group_list
+
+
+
+
 
 
 
