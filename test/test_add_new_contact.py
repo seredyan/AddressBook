@@ -5,15 +5,14 @@ from model.contact import Contact
 
 def test_new_contact(app):
     old_contacts = app.contact.get_contact_list()
-    app.contact.create(Contact(name="Ivan",
-                               lastname="Ivanov", address="Pushkina Sqr, 10-11\nMoscow, Russia",
-                               landline="555555555", mobile="77777777777", email="ivanov@mail.ru"))
-
+    added_contact = Contact(name="Ivan",
+                               lastname="Ivanov", address="Russia",
+                               landline="111", mobile="777", email="gmail")
+    app.contact.create(added_contact)
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) + 1 == len(new_contacts)
-
-
-
+    old_contacts.append(added_contact)
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 
 #
