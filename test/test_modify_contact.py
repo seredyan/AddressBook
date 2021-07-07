@@ -1,12 +1,12 @@
 
-
+import model
 from model.contact import Contact
 
 def test_modify_contact_address(app):
     if app.contact.count() == 0:
         app.contact.create(Contact(name="test"))
     old_contacts = app.contact.get_contact_list()
-    modified_contact = Contact(address="Address edited")
+    modified_contact = Contact(name="Anna", lastname="D", address="Address edited")
     modified_contact.id = old_contacts[0].id
     app.contact.modify_contact(modified_contact)
     new_contacts = app.contact.get_contact_list()
