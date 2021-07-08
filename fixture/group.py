@@ -16,6 +16,8 @@ class GroupHelper:
         # submit group creation
         wd.find_element_by_name("submit").click()
         self.return_to_groups_page()
+        self.group_cache = None  # сбрасываем кэш, тк он теперь невалидный.
+                                 # при следующем обращении get_group_list кэш будет построен заново.
 
 
     def modify_first_group(self, group):  # ????? new_group_data -как 2й параметр вместо просто group???
@@ -29,6 +31,7 @@ class GroupHelper:
         # submit group modification
         wd.find_element_by_name("update").click()
         self.return_to_groups_page()
+        self.group_cache = None
 
 
     def delete_first_group(self):
@@ -38,6 +41,7 @@ class GroupHelper:
         # submit deletion
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
+        self.group_cache = None
 
 
      # вспомогательные КУСКИ КОДА, повторющиеся внутри различных методов выше
@@ -100,15 +104,19 @@ class GroupHelper:
  #            self.delete_first_group()
  #
 
+
+    group_cache = None
+
     def get_group_list(self):
-        wd = self.app.wd
-        self.open_groups_page()
-        group_list = []
-        for element in wd.find_elements_by_css_selector("span.group"):
-            text = element.text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            group_list.append(Group(name=text, id=id))
-        return group_list
+        if self.group_cache is None:
+            wd = self.app.wd
+            self.open_groups_page()
+            self.group_cache = []
+            for element in wd.find_elements_by_css_selector("span.group"):
+                text = element.text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.group_cache.append(Group(name=text, id=id))
+        return list(self.group_cache)
 
 
 
