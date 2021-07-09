@@ -18,12 +18,15 @@ class ContactHelper:
         self.return_homepage()
         self.contact_cache = None
 
-
-
     def delete_first_contact(self):
         wd = self.app.wd
         self.app.open_home_page()
-        self.select_first_contact()
+        self.select_some_contact(0)
+
+    def delete_some_contact(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_some_contact(index)
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         wd.implicitly_wait(0.3)
@@ -55,6 +58,9 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
 
+    def select_some_contact(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
 
     def change_field_value(self, field_name, text):    #  параметр text - это новый текст вводимый для заполения полей
         wd = self.app.wd
