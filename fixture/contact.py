@@ -18,10 +18,12 @@ class ContactHelper:
         self.return_homepage()
         self.contact_cache = None
 
+
     def delete_first_contact(self):
         wd = self.app.wd
         self.app.open_home_page()
         self.select_some_contact(0)
+
 
     def delete_some_contact(self, index):
         wd = self.app.wd
@@ -36,22 +38,40 @@ class ContactHelper:
 
 
 
-    def modify_contact(self, contact):
+    # def modify_contact(self, contact):
+    #     wd = self.app.wd
+    #     self.app.open_home_page()
+    #
+    #     #self.select_first_contact()
+    #     #wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[4]/td[8]/a/img").click()
+    #     #wd.find_element_by_xpath("//img[@alt='Edit']").click()
+    #
+    #     wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+    #     self.fill_contact_form(contact)
+    #     wd.find_element_by_name("update").click()
+    #     self.return_homepage()
+    #     self.contact_cache = None
+
+    def modify_contact_by_index(self, index, contact):
         wd = self.app.wd
         self.app.open_home_page()
-        #self.select_first_contact()
-        #wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[4]/td[8]/a/img").click()
-        #wd.find_element_by_xpath("//img[@alt='Edit']").click()
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+
+        # self.select_first_contact()
+        # wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[4]/td[8]/a/img").click()
+        # wd.find_element_by_xpath("//img[@alt='Edit']").click()
+
+        self.select_modifiable_contact(index)
         self.fill_contact_form(contact)
         wd.find_element_by_name("update").click()
         self.return_homepage()
         self.contact_cache = None
 
-
-
     #     вспомогательные КУСКИ КОДА, повторющиеся внутри различных методов выше
 
+    def select_modifiable_contact(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
+        #wd.find_elements_by_css_selector("img[alt='Edit']")[index].click()
 
 
     def select_first_contact(self):
@@ -61,6 +81,8 @@ class ContactHelper:
     def select_some_contact(self, index):
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
+
+
 
     def change_field_value(self, field_name, text):    #  параметр text - это новый текст вводимый для заполения полей
         wd = self.app.wd

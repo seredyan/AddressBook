@@ -27,7 +27,7 @@ def test_modify_group_header(app):
     old_groups = app.group.get_group_list()
     index = randrange(len(old_groups))
     modified_group = Group(header="header edited")
-    modified_group.id = old_groups[0].id
+    modified_group.id = old_groups[index].id
     app.group.modify_group_by_index(index, modified_group)
 
     assert len(old_groups) == app.group.count()
