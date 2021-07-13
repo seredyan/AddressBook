@@ -70,8 +70,8 @@ class ContactHelper:
 
     def select_modifiable_contact(self, index):
         wd = self.app.wd
-        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
-        #wd.find_elements_by_css_selector("img[alt='Edit']")[index].click()
+        # wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
+        wd.find_elements_by_css_selector("img[alt='Edit']")[index].click()
 
 
     def select_first_contact(self):
@@ -142,9 +142,33 @@ class ContactHelper:
             wd = self.app.wd
             self.app.open_home_page()
             self.contact_cache = []
-            for element in wd.find_elements_by_name("entry"):
-                first_name = element.find_elements_by_tag_name("td")[2].text
-                last_name = element.find_elements_by_tag_name("td")[1].text
-                id = element.find_element_by_name("selected[]").get_attribute("value")
-                self.contact_cache.append(Contact(lastname=last_name, name=first_name, id=id))
+            for row in wd.find_elements_by_name("entry"):
+                cells = row.find_elements_by_tag_name("td")
+                first_name = cells[2].text
+                last_name = cells[1].text
+                id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+                all_phones = cells[5].text.splitlines()
+
+                # другие варианты
+                # first_name = row.find_elements_by_tag_name("td")[2].text  # вторая колонка таблицы
+                # last_name = row.find_elements_by_tag_name("td")[1].text   # первая колонка таблицы
+                # id = row.find_element_by_name("selected[]").get_attribute("value")
+                # all_phones = row.find_elements_by_tag_name("td")[5].text.splitlines()
+                self.contact_cache.append(Contact(name=first_name, lastname=last_name, id=id,
+                                                  landline=all_phones[0], mobile=all_phones[1],
+                                                  workphone=all_phones[2]))#, fax=all_phones[3]))
         return list(self.contact_cache)
+
+    def get_contact_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.select_modifiable_contact(index)
+        first_name = wd.find_element_by_name("firstname").get_attribute("value")
+        last_name = wd.find_element_by_name("lastname").get_attribute("value")
+        id = wd.find_element_by_name("id").get_attribute("value")
+        landline = wd.find_element_by_name("home").get_attribute("value") # выбираем поле редактирования домашн телефона
+        mobile = wd.find_element_by_name("mobile").get_attribute("value")
+        workphone = wd.find_element_by_name("work").get_attribute("value")
+        # fax = wd.find_element_by_name("fax").get_attribute("value")
+        return Contact(name=first_name, lastname=last_name, id=id,
+                       landline=landline, mobile=mobile,
+                       workphone=workphone)#, fax=fax)
