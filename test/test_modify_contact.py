@@ -23,7 +23,7 @@ def test_modify_contact_phone(app):
         app.contact.create(Contact(name="test"))
     old_contacts = app.contact.get_contact_list()
     index = randrange(len(old_contacts))
-    modified_contact = Contact(mobile="Cell # edited")
+    modified_contact = Contact(mobile="cell#edited")
     modified_contact.id = old_contacts[index].id
     app.contact.modify_contact_by_index(index, modified_contact)
 
@@ -52,7 +52,7 @@ def test_modify_contact_landline(app):
         app.contact.create(Contact(name="test"))
     old_contacts = app.contact.get_contact_list()
     index = randrange(len(old_contacts))
-    modified_contact = Contact(landline="Landline edited")
+    modified_contact = Contact(landline="Landline#edited")
     modified_contact.id = old_contacts[index].id
     app.contact.modify_contact_by_index(index, modified_contact)
     assert len(old_contacts) == app.contact.count()

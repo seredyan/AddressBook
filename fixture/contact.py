@@ -100,6 +100,7 @@ class ContactHelper:
         self.change_field_value("address", contact.address)
         self.change_field_value("home", contact.landline)
         self.change_field_value("mobile", contact.mobile)
+        self.change_field_value("work", contact.workphone)
         self.change_field_value("email", contact.email)
 
 
