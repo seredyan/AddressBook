@@ -1,4 +1,6 @@
 
+
+import re
 from model.contact import Contact
 
 class ContactHelper:
@@ -68,17 +70,21 @@ class ContactHelper:
 
     #     вспомогательные КУСКИ КОДА, повторющиеся внутри различных методов выше
 
+
     def select_modifiable_contact(self, index):
         wd = self.app.wd
+        self.app.open_home_page()
         # wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         wd.find_elements_by_css_selector("img[alt='Edit']")[index].click()
+
+
 
 
     def select_first_contact(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
 
-    def select_some_contact(self, index):
+    def select_some_contact(self, index):    # чтобы выбрать случайный контакт для удаления
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
 
@@ -148,7 +154,7 @@ class ContactHelper:
                 first_name = cells[2].text
                 last_name = cells[1].text
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value")
-                all_phones = cells[5].text.splitlines()
+                all_phones = cells[5].text.splitlines() # сначала считывае текст в ячейке, потом делается сплит
 
                 # другие варианты
                 # first_name = row.find_elements_by_tag_name("td")[2].text  # вторая колонка таблицы
@@ -173,3 +179,38 @@ class ContactHelper:
         return Contact(name=first_name, lastname=last_name, id=id,
                        landline=landline, mobile=mobile,
                        workphone=workphone)#, fax=fax)
+
+    # def get_contact_info_from_edit_page(self, index):
+    #     wd = self.app.wd
+    #     self.select_modifiable_contact(index)
+    #
+    #     landline = wd.find_element_by_name("home").get_attribute("value") # выбираем поле редактирования домашн телефона
+    #     mobile = wd.find_element_by_name("mobile").get_attribute("value")
+    #     workphone = wd.find_element_by_name("work").get_attribute("value")
+    #     # fax = wd.find_element_by_name("fax").get_attribute("value")
+    #     return Contact(landline=landline, mobile=mobile,
+    #                    workphone=workphone)#, fax=fax)
+
+
+    def open_contact_view_by_index(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        row = wd.find_elements_by_name("entry")[index]
+        #wd.find_elements_by_tag_name("td")[6].click()
+        cell = row.find_elements_by_tag_name("td")[6]
+        cell.find_element_by_tag_name("a").click()
+
+
+
+
+
+    def get_contact_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_contact_view_by_index(index)
+        text = wd.find_element_by_id("content").text
+
+        landline = re.search("H: (.*)", text).group(1)
+        mobile = re.search("M: (.*)", text).group(1)
+        workphone = re.search("W: (.*)", text).group(1)
+
+        return Contact(landline=landline, mobile=mobile, workphone=workphone)
