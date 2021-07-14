@@ -1,5 +1,5 @@
 
-
+import time
 import re
 from model.contact import Contact
 
@@ -154,16 +154,14 @@ class ContactHelper:
                 first_name = cells[2].text
                 last_name = cells[1].text
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value")
-                all_phones = cells[5].text.splitlines() # сначала считывае текст в ячейке, потом делается сплит
+                all_phones = cells[5].text
 
                 # другие варианты
                 # first_name = row.find_elements_by_tag_name("td")[2].text  # вторая колонка таблицы
                 # last_name = row.find_elements_by_tag_name("td")[1].text   # первая колонка таблицы
                 # id = row.find_element_by_name("selected[]").get_attribute("value")
                 # all_phones = row.find_elements_by_tag_name("td")[5].text.splitlines()
-                self.contact_cache.append(Contact(name=first_name, lastname=last_name, id=id,
-                                                  landline=all_phones[0], mobile=all_phones[1],
-                                                  workphone=all_phones[2]))#, fax=all_phones[3]))
+                self.contact_cache.append(Contact(name=first_name, lastname=last_name, id=id, all_phones_from_home_page=all_phones))
         return list(self.contact_cache)
 
     def get_contact_info_from_edit_page(self, index):
@@ -195,8 +193,10 @@ class ContactHelper:
     def open_contact_view_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
+
+        # wd.find_elements_by_tag_name("td")[6].click()
+        # OR
         row = wd.find_elements_by_name("entry")[index]
-        #wd.find_elements_by_tag_name("td")[6].click()
         cell = row.find_elements_by_tag_name("td")[6]
         cell.find_element_by_tag_name("a").click()
 
