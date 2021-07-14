@@ -144,6 +144,26 @@ class ContactHelper:
     contact_cache = None
 
 
+    # def get_contact_list(self):
+    #     if self.contact_cache is None:
+    #         wd = self.app.wd
+    #         self.app.open_home_page()
+    #         self.contact_cache = []
+    #         for row in wd.find_elements_by_name("entry"):
+    #             cells = row.find_elements_by_tag_name("td")
+    #             first_name = cells[2].text
+    #             last_name = cells[1].text
+    #             id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+    #             all_phones = cells[5].text
+    #
+    #             # другие варианты
+    #             # first_name = row.find_elements_by_tag_name("td")[2].text  # вторая колонка таблицы
+    #             # last_name = row.find_elements_by_tag_name("td")[1].text   # первая колонка таблицы
+    #             # id = row.find_element_by_name("selected[]").get_attribute("value")
+    #             # all_phones = row.find_elements_by_tag_name("td")[5].text.splitlines()
+    #             self.contact_cache.append(Contact(name=first_name, lastname=last_name, id=id, all_phones_from_home_page=all_phones))
+    #     return list(self.contact_cache)
+
     def get_contact_list(self):
         if self.contact_cache is None:
             wd = self.app.wd
@@ -154,15 +174,19 @@ class ContactHelper:
                 first_name = cells[2].text
                 last_name = cells[1].text
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value")
-                all_phones = cells[5].text
+                all_phones = cells[5].text.splitlines()
 
                 # другие варианты
                 # first_name = row.find_elements_by_tag_name("td")[2].text  # вторая колонка таблицы
                 # last_name = row.find_elements_by_tag_name("td")[1].text   # первая колонка таблицы
                 # id = row.find_element_by_name("selected[]").get_attribute("value")
                 # all_phones = row.find_elements_by_tag_name("td")[5].text.splitlines()
-                self.contact_cache.append(Contact(name=first_name, lastname=last_name, id=id, all_phones_from_home_page=all_phones))
+                self.contact_cache.append(
+                    Contact(name=first_name, lastname=last_name, id=id, landline=all_phones[0], mobile=all_phones[1], workphone=all_phones[2]))
         return list(self.contact_cache)
+
+
+
 
     def get_contact_info_from_edit_page(self, index):
         wd = self.app.wd
