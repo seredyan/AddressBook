@@ -4,7 +4,7 @@ from sys import maxsize
 
 class Contact:
 
-    def __init__(self, name=None, lastname=None, address=None, landline=None, mobile=None, workphone=None, all_phones_from_home_page=None, email=None, id=None):
+    def __init__(self, name=None, lastname=None, address=None, landline=None, mobile=None, workphone=None, all_phones_from_home_page=None, email=None,  email2=None,  email3=None, id=None):
         self.name = name
         self.lastname = lastname
         self.address = address
@@ -13,10 +13,12 @@ class Contact:
         self.workphone = workphone
         self.all_phones_from_home_page = all_phones_from_home_page
         self.email = email
+        self.email2 = email2
+        self.email3 = email3
         self.id = id
 
     def __repr__(self):
-        return "%s:%s:%s:%s:%s:%s" % (self.id, self.lastname, self.name, self.landline, self.mobile, self.workphone)#, self.fax)     # цель- увидеть физические имена объектов (см ролик 4_2 compare_lists)
+        return "%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (self.id, self.lastname, self.name, self.address, self.email, self.email2, self.email3, self.landline, self.mobile, self.workphone)#, self.fax)     # цель- увидеть физические имена объектов (см ролик 4_2 compare_lists)
                                                                  # поменял порядок  name и lastname - как на веб приложении
 
     def __eq__(self, other):
