@@ -8,7 +8,7 @@ class Application:
 
     def __init__(self):     # запуск браузера через этот конструктор
         self.wd = webdriver.Firefox()
-        #self.wd.implicitly_wait(1)
+        # self.wd.implicitly_wait(3)
         self.session = SessionHelper(self) # помощник получает ссылку на объект класса Application
                                            # это даст возможность в одном помощнике обращаться к др помощникам
         self.group = GroupHelper(self)

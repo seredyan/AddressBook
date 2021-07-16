@@ -1,4 +1,7 @@
 
+
+#  Задание № 14
+
 import re
 
 from random import randrange
@@ -12,7 +15,7 @@ def test_fields_on_homepage(app):  # метод ПРЯМОЙ  проверки
     all_contacts = app.contact.get_contact_list_split()
     index = randrange(len(all_contacts))
 
-    contact_from_home_page = app.contact.get_contact_list_split()[index] # проверка для первого контакта (пока не для всех)
+    contact_from_home_page = app.contact.get_contact_list_split()[index]
     contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
 
     assert contact_from_home_page.name == contact_from_edit_page.name

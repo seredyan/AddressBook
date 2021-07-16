@@ -6,7 +6,7 @@ from model.contact import Contact
 def test_add_new_contact(app):
     old_contacts = app.contact.get_contact_list_split()
     added_contact = Contact(name="Ivan",
-                               lastname="Ivanov", address="Russia",  email="@gmail.com", email2="@yandex.ru", email3="mail.ru",
+                               lastname="Ivanov", address="Russia",  email="abc@gmail.com", email2="xy@yandex.ru", email3="we@mail.ru",
                                landline="111", mobile="222", workphone="333")
     app.contact.create(added_contact)
 

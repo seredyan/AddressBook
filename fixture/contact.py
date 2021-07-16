@@ -156,6 +156,7 @@ class ContactHelper:
                 first_name = cells[2].text
                 last_name = cells[1].text
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+                all_emails = cells[4].text
                 all_phones = cells[5].text
 
                 # другие варианты
@@ -163,8 +164,10 @@ class ContactHelper:
                 # last_name = row.find_elements_by_tag_name("td")[1].text   # первая колонка таблицы
                 # id = row.find_element_by_name("selected[]").get_attribute("value")
                 # all_phones = row.find_elements_by_tag_name("td")[5].text.splitlines()
-                self.contact_cache.append(Contact(name=first_name, lastname=last_name, id=id, all_phones_from_home_page=all_phones))
+                self.contact_cache.append(Contact(name=first_name, lastname=last_name, id=id, all_emails_from_home_page=all_emails, all_phones_from_home_page=all_phones))
         return list(self.contact_cache)
+
+
 
     def get_contact_list_split(self):  # метод ПРЯМОЙ  проверки   split   !!!!!!
         if self.contact_cache is None:
@@ -187,7 +190,7 @@ class ContactHelper:
                 # all_phones = row.find_elements_by_tag_name("td")[5].text.splitlines()
 
         #         self.contact_cache.append(
-        #             Contact(name=first_name, lastname=last_name, id=id, address=address, email=email, landline=all_phones[0], mobile=all_phones[1], workphone=all_phones[2]))
+        #             Contact(name=first_name, lastname=last_name, id=id, address=address, landline=all_phones[0], mobile=all_phones[1], workphone=all_phones[2]))
         # return list(self.contact_cache)
 
                 self.contact_cache.append(Contact(name=first_name, lastname=last_name, id=id, address=address, email=emails[0], email2=emails[1], email3=emails[2], landline=all_phones[0],
@@ -249,4 +252,30 @@ class ContactHelper:
         mobile = re.search("M: (.*)", text).group(1)
         workphone = re.search("W: (.*)", text).group(1)
 
-        return Contact(landline=landline, mobile=mobile, workphone=workphone)
+
+
+        return Contact(landline=landline, mobile=mobile, workphone=workphone)# email=email)
+
+
+
+    def get_contact_from_view_page_join(self, index):
+        wd = self.app.wd
+        self.open_contact_view_by_index(index)
+        text = wd.find_element_by_id("content").text
+
+
+        landline = re.search("H: (.*)", text).group(1)
+        mobile = re.search("M: (.*)", text).group(1)
+        workphone = re.search("W: (.*)", text).group(1)
+
+        emails_list = re.findall("([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)", text)
+        all_emails = '\n'.join(emails_list)
+
+
+        phones_list = [landline, mobile, workphone]
+        all_phones = '\n'.join(phones_list)
+
+
+
+        return Contact(all_phones_from_view_page=all_phones, all_emails_from_view_page=all_emails)
+        # return Contact(landline=landline, mobile=mobile, workphone=workphone)# email=email)
