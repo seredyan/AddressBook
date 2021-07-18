@@ -217,16 +217,6 @@ class ContactHelper:
                        landline=landline, mobile=mobile,
                        workphone=workphone)#, fax=fax)
 
-    # def get_contact_info_from_edit_page(self, index):
-    #     wd = self.app.wd
-    #     self.select_modifiable_contact(index)
-    #
-    #     landline = wd.find_element_by_name("home").get_attribute("value") # выбираем поле редактирования домашн телефона
-    #     mobile = wd.find_element_by_name("mobile").get_attribute("value")
-    #     workphone = wd.find_element_by_name("work").get_attribute("value")
-    #     # fax = wd.find_element_by_name("fax").get_attribute("value")
-    #     return Contact(landline=landline, mobile=mobile,
-    #                    workphone=workphone)#, fax=fax)
 
 
     def open_contact_view_by_index(self, index):
@@ -262,20 +252,33 @@ class ContactHelper:
         wd = self.app.wd
         self.open_contact_view_by_index(index)
         text = wd.find_element_by_id("content").text
-
-
-        landline = re.search("H: (.*)", text).group(1)
-        mobile = re.search("M: (.*)", text).group(1)
-        workphone = re.search("W: (.*)", text).group(1)
+        all_info_on_page = re.search('H: (.*)\nM: (.*)\nW: (.*)', text).group()
+        all_phones_on_page = re.findall(r'[^H:M:W:]', all_info_on_page)
+        all_phones = ''.join(all_phones_on_page)
 
         emails_list = re.findall("([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)", text)
         all_emails = '\n'.join(emails_list)
 
+        #
+        # landline = re.search("H: (.*)", text).group(1)
+        # mobile = re.search("M: (.*)", text).group(1)
+        # workphone = re.search("W: (.*)", text).group(1)
+        # phones_list = [landline, mobile, workphone]
+        # all_phones = '\n'.join(phones_list)
 
-        phones_list = [landline, mobile, workphone]
-        all_phones = '\n'.join(phones_list)
+        # all_phones_on_page = re.search('H: (.*)\nM: (.*)\nW: (.*)', text).group(1, 2, 3)
+        # aaa = '\n'.join(all_phones_on_page)
+        # phones_list = [aaa]
+        # all_phones = '\n'.join(phones_list)
+
+        # all_phones_on_page = re.search('H: (.*)\nM: (.*)\nW: (.*)', text)
+        # landline = all_phones_on_page.group(1)
+        # mobile = all_phones_on_page.group(2)
+        # workphone = all_phones_on_page.group(3)
+        # phones_list = [landline, mobile, workphone]
+        # all_phones = '\n'.join(phones_list)
+
 
 
 
         return Contact(all_phones_from_view_page=all_phones, all_emails_from_view_page=all_emails)
-        # return Contact(landline=landline, mobile=mobile, workphone=workphone)# email=email)
