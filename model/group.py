@@ -15,7 +15,7 @@ class Group:
 
 
     def __repr__(self):
-        return "%s:%s" % (self.id, self.name)     # цель- увидеть физические имена объектов (см ролик 4_2 compare_lists)
+        return "%s:%s:%s:%s" % (self.id, self.name, self.header, self.footer)     # цель- увидеть физические имена объектов (см ролик 4_2 compare_lists)
 
 
     def __eq__(self, other):
