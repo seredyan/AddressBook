@@ -9,7 +9,8 @@ fixture = None
 def app(request):
     global fixture                      # объявляем, что собираемся пользоваться этой глобальной переменной
     if fixture is None:                 #  это условие выполняется перед вызовом 1й тестовой ф-ии
-        fixture = Application()          # инициализируем фикстуру
+        browser = request.config.getoption("--browser")
+        fixture = Application(browser=browser)          # инициализируем фикстуру
 
     else:                     # теперь проверяем, не испортилась ли фикстура
         if not fixture.is_valid():  # если фикстура валидная, то делать ничего не нужно, поэтому ставим NOT чтобы задать дальнейшие шаги.
@@ -28,7 +29,8 @@ def stop(request):
     #return fixture
 
 
-
+def pytest_addoption(parser):
+    parser.addoption("--browser", action="store", default="firefox")
 
 
 
