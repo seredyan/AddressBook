@@ -40,7 +40,7 @@ def test_phones_on_homepage(app): # метод ОБРАТНОЙ проверки
 #     # assert contact_from_view_page.email == contact_from_edit_page.email
 
 
-def test_phones_on_contact_view_page(app):   # метод ОБРАТНОЙ  проверки
+def test_phones_and_emails_on_contact_view_page(app):   # метод ОБРАТНОЙ  проверки
     all_contacts = app.contact.get_contact_list_join()
     index = randrange(len(all_contacts))
     contact_from_view_page = app.contact.get_contact_from_view_page_join(index)
