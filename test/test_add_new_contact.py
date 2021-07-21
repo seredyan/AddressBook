@@ -11,7 +11,7 @@ def random_string(prefix, maxlen):
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 def random_char_email(maxlen):
-    random_emails = ["@gmail.com", "@ya.ru", "@mail.ru", "@icloud.com", "@company.com", "yahoo.com", "@outlook.com"]
+    random_emails = ["@gmail.com", "@ya.ru", "@mail.ru", "@icloud.com", "@company.com", "@yahoo.com", "@outlook.com"]
     symbols = (''.join(random.choice(string.ascii_letters + string.digits) for _ in range(random.randrange(maxlen))))
     return (symbols + random.choice(random_emails))
 
