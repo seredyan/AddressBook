@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from model.group import Group
-import pytest
 
 
 # ниже выбирая варианты данных можем генерировать те или иные виды тестовых данных
-from data.add_group import testdata
+from data.groups import testdata
 # from data.add_group import constant as testdata
 
 
 
 
-@pytest.mark.parametrize("added_group", testdata, ids=[repr(x) for x in testdata])
-def test_add_group(app, added_group):
+
+def test_add_group(app, data_groups):
+    added_group = data_groups
     old_groups = app.group.get_group_list()
     app.group.create(added_group)
 
