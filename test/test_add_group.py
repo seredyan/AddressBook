@@ -2,29 +2,14 @@
 
 from model.group import Group
 import pytest
-import random
-import string
 
 
-def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + " "*3
-    # symbols = string.ascii_letters + string.digits + string.punctuation + " " * 10  # добавили спец символы
-    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
+# ниже выбирая варианты данных можем генерировать те или иные виды тестовых данных
+from data.add_group import testdata
+# from data.add_group import constant as testdata
 
 
 
-# testdata = [    # комбинируем разные варианты случайностей
-#     Group(name=name, header=header, footer=footer)
-#     for name in ["", random_string("name", 10)]
-#     for header in ["", random_string("header", 20)]
-#     for footer in ["", random_string("footer", 20)]
-# ]
-
-
-testdata = [Group(name="", header="", footer="")] + [
-    Group(name=random_string("name", 4), header=random_string("header", 5), footer=random_string("footer", 5))
-    for i in range(5)
-]
 
 @pytest.mark.parametrize("added_group", testdata, ids=[repr(x) for x in testdata])
 def test_add_group(app, added_group):
