@@ -155,6 +155,7 @@ class ContactHelper:
                 cells = row.find_elements_by_tag_name("td")
                 first_name = cells[2].text
                 last_name = cells[1].text
+                address = cells[3].text
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value")
                 all_emails = cells[4].text
                 all_phones = cells[5].text
@@ -164,12 +165,12 @@ class ContactHelper:
                 # last_name = row.find_elements_by_tag_name("td")[1].text   # первая колонка таблицы
                 # id = row.find_element_by_name("selected[]").get_attribute("value")
                 # all_phones = row.find_elements_by_tag_name("td")[5].text.splitlines()
-                self.contact_cache.append(Contact(name=first_name, lastname=last_name, id=id, all_emails_from_home_page=all_emails, all_phones_from_home_page=all_phones))
+                self.contact_cache.append(Contact(name=first_name, lastname=last_name, address=address, id=id, all_emails_from_home_page=all_emails, all_phones_from_home_page=all_phones))
         return list(self.contact_cache)
 
 
 
-    def get_contact_list_split(self):  # метод ПРЯМОЙ  проверки   split   !!!!!!
+    def get_contact_list_split(self):  # метод ПРЯМОЙ  проверки   split (работает только, если ВСЕ поля заполнены!!!)
         if self.contact_cache is None:
             wd = self.app.wd
             self.app.open_home_page()
@@ -181,7 +182,7 @@ class ContactHelper:
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value")
                 address = cells[3].text
                 emails = cells[4].text.splitlines()
-                all_phones = cells[5].text.splitlines()
+                all_phones = cells[5].text.splitlines()  # если отсутствует один из номеров, то будет пустое место на которое наложится след номер
 
                 # другие варианты
                 # first_name = row.find_elements_by_tag_name("td")[2].text  # вторая колонка таблицы

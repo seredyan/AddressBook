@@ -14,6 +14,9 @@ def test_phones_on_homepage(app): # метод ОБРАТНОЙ проверки
     assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)
     assert contact_from_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(contact_from_edit_page)
 
+    print(contact_from_home_page.all_phones_from_home_page)
+    print(merge_phones_like_on_home_page(contact_from_edit_page))
+
 
 
 
@@ -49,9 +52,11 @@ def test_phones_and_emails_on_contact_view_page(app):   # метод ОБРАТ�
     assert merge_phones_like_on_view_page(contact_from_view_page) == merge_phones_like_on_home_page(contact_from_edit_page)
     assert contact_from_view_page.all_emails_from_view_page == merge_emails_like_on_home_page(contact_from_edit_page)
 
+
     # assert contact_from_view_page.all_phones_from_view_page == merge_phones_like_on_home_page(contact_from_edit_page)
 
-
+    print(contact_from_view_page.all_emails_from_view_page)
+    print(merge_emails_like_on_home_page(contact_from_edit_page))
 
 
 
