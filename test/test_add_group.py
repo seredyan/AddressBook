@@ -11,8 +11,8 @@ from data.groups import testdata
 
 
 
-def test_add_group(app, data_groups):
-    added_group = data_groups
+def test_add_group(app, json_groups):  # осущ связь тестовых ф-й с данными, хранящимися в файлах в формате json
+    added_group = json_groups
     old_groups = app.group.get_group_list()
     app.group.create(added_group)
 

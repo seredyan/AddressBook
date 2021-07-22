@@ -2,7 +2,7 @@
 import random
 import string
 import os.path
-import json
+import jsonpickle
 from model.group import Group
 import getopt
 import sys
@@ -46,4 +46,6 @@ file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f) # 2 т�
 # из родительской директории перпходим выше в подкаталог data
 
 with open(file, "w") as file_out:
-    file_out.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2)) # dumps превращает некоторую структуру данных в строку
+    jsonpickle.set_encoder_options("json", indent=2)
+    file_out.write(jsonpickle.encode(testdata))
+
