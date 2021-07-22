@@ -9,7 +9,7 @@ from model.group import Group
 
 
 
-constant = [           # простые фиксированные данные помогают в случае отладки тестов
+testdata = [           # простые фиксированные данные помогают в случае отладки тестов
     Group(name="name1", header="header1", footer="footer1"),
     Group(name="name2", header="header2", footer="footer2")
 ]
