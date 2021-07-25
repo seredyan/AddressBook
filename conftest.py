@@ -56,10 +56,16 @@ def stop(request):
     # return fixture
 
 
+@pytest.fixture()
+def check_ui(request):
+    return request.config.getoption("--check_ui") # это просто булевская опция (либо есть, либо нет)
+
+
+
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="target.json")
-
+    parser.addoption("--check_ui", action="store_true") # значение опции автоматич ук True, если она есть, и False, если ее нет
 
 
 def pytest_generate_tests(metafunc):

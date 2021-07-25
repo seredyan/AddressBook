@@ -11,7 +11,9 @@ class DbFixture:
         self.name = name
         self.user = user
         self.password = password
-        self.connection = pymysql.connect(host=host, database=name, user=user, password=password)
+        self.connection = pymysql.connect(host=host, database=name, user=user, password=password, autocommit=True)
+                                                        # autocommit озн что кэш после кажд запроса сбрасывается (роли 7_4)
+
 
     def get_group_list(self): #  загруж из БД инфу о группах и контактах
         list = []
