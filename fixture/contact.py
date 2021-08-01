@@ -24,13 +24,13 @@ class ContactHelper:
     def delete_first_contact(self):
         wd = self.app.wd
         self.app.open_home_page()
-        self.select_some_contact(0)
+        self.select_some_contact_ui(0)
 
 
     def delete_some_contact(self, index):
         wd = self.app.wd
         self.app.open_home_page()
-        self.select_some_contact(index)
+        self.select_some_contact_ui(index)
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         wd.implicitly_wait(0.3)
@@ -38,7 +38,18 @@ class ContactHelper:
         self.return_homepage()
         self.contact_cache = None
 
-
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_deletable_contact_by_id(id)
+        # submit deletion
+        wd.find_element_by_css_selector("input[value='Delete']").click()
+        # wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
+        wd.implicitly_wait(0.5)
+        wd.find_element_by_css_selector("div.msgbox")
+        self.return_homepage()
+        self.contact_cache = None
 
     # def modify_contact(self, contact):
     #     wd = self.app.wd
@@ -68,7 +79,22 @@ class ContactHelper:
         self.return_homepage()
         self.contact_cache = None
 
-    #     вспомогательные КУСКИ КОДА, повторющиеся внутри различных методов выше
+    def modify_contact_by_id(self, id, contact):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_modifiable_contact_by_id(id)
+        self.fill_contact_form(contact)
+        wd.find_element_by_name("update").click()
+        self.return_homepage()
+        self.contact_cache = None
+
+
+
+
+
+
+
+    ###     вспомогательные КУСКИ КОДА, повторющиеся внутри различных методов выше
 
 
     def select_modifiable_contact(self, index):
@@ -84,9 +110,20 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
 
-    def select_some_contact(self, index):    # чтобы выбрать случайный контакт для удаления
+    def select_some_contact_ui(self, index):    # чтобы выбрать случайный контакт для удаления
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
+
+
+    def select_modifiable_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector('a[href="edit.php?id=%s"]' % id).click()
+
+    def select_deletable_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
+
 
 
 

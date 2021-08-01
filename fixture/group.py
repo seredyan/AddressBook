@@ -35,6 +35,19 @@ class GroupHelper:
         self.return_to_groups_page()
         self.group_cache = None
 
+    def modify_group_by_id(self, id, group):  # ????? new_group_data -как 2й параметр вместо просто group???
+        wd = self.app.wd
+        self.open_groups_page()
+        self.select_group_by_id(id)
+        # select Edit group
+        wd.find_element_by_name("edit").click()
+        # fill group form
+        self.fill_group_form(group)  # ????? new_group_data -как 2й параметр вместо просто group???
+        # submit group modification
+        wd.find_element_by_name("update").click()
+        self.return_to_groups_page()
+        self.group_cache = None
+
     def modify_first_group(self):
         wd = self.app.wd
         self.modify_group_by_index(0)
@@ -62,7 +75,7 @@ class GroupHelper:
         # submit deletion
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
-        self.group_cache = None
+        self.group_cache = None   # хотя зд не нужно удалять кэш тк он и так пустой
 
 
      # вспомогательные КУСКИ КОДА, повторющиеся внутри различных методов выше
@@ -83,7 +96,7 @@ class GroupHelper:
 
     def select_group_by_id(self, id):
         wd = self.app.wd
-        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()  # делаем select по-прежнему из UI
 
 
 

@@ -1,16 +1,18 @@
 
 
 #  Задание № 14
-
+from model.contact import Contact
 import re
+import random
+#from random import randrange
 
-from random import randrange
 
-
-
-def test_fields_on_homepage(app):  # метод ПРЯМОЙ  проверки
-    all_contacts = app.contact.get_contact_list_join()
-    index = randrange(len(all_contacts))
+def test_fields_on_homepage(app, db, check_ui):  # метод ПРЯМОЙ  проверки
+    if db.get_contact_list() == 0:
+        app.contact.create(Contact(name="test", lastname="test", address='test address', email='test@email.com', mobile='777'))
+    all_contacts = db.get_contact_list()
+    selected_contact = random.choice(all_contacts)
+    index = all_contacts.index(selected_contact)
 
     contact_from_home_page = app.contact.get_contact_list_join()[index]
     contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
@@ -18,11 +20,11 @@ def test_fields_on_homepage(app):  # метод ПРЯМОЙ  проверки
 
     assert contact_from_home_page.name == contact_from_edit_page.name
     assert contact_from_home_page.lastname == contact_from_edit_page.lastname
-
     assert contact_from_home_page.address == contact_from_edit_page.address
-
     assert contact_from_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(contact_from_edit_page)
     assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)
+
+
 
 
 
@@ -42,8 +44,8 @@ def clear(s):
 
 
 
-
-# def test_fields_on_homepage_direct(app):  # метод ПРЯМОЙ  проверки
+#
+# def test_fields_on_homepage_direct_ui(app):  # метод ПРЯМОЙ  проверки
 #     all_contacts = app.contact.get_contact_list_split()
 #     index = randrange(len(all_contacts))
 #
@@ -62,5 +64,5 @@ def clear(s):
 #     assert clear(contact_from_home_page.landline) == clear(contact_from_edit_page.landline)
 #     assert clear(contact_from_home_page.mobile) == clear(contact_from_edit_page.mobile)
 #     assert clear(contact_from_home_page.workphone) == clear(contact_from_edit_page.workphone)
-
+#
 
