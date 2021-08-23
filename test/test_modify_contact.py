@@ -5,7 +5,7 @@ from random import randrange
 
 def test_modify_contact_address(app):
     if app.contact.count() == 0:
-        app.contact.create(Contact(name="NAME", lastname='LASTNAME', address='ADDRESS', landline='11', mobile='22', workphone='33', email='1@mail.ru', email2='2@gmail.com', email3='3@ya.ru'))
+        app.contact.create(Contact(name="NAME", lastname='LASTNAME', address='ADDRESS', landline='11', mobile='22', workphone='33', email='1@mail.ru', email2='2@gmail.com', email3='3@ya.ru', second_landline='44'))
     old_contacts = app.contact.get_contact_list_split()
     index = randrange(len(old_contacts))
     modified_contact = Contact(address="Address EDITED")
@@ -21,10 +21,10 @@ def test_modify_contact_address(app):
 
 def test_modify_contact_phone(app):
     if app.contact.count() == 0:
-        app.contact.create(Contact(name="NAME", lastname='LASTNAME', address='ADDRESS', landline='11', mobile='22', workphone='33', email='1@mail.ru', email2='2@gmail.com', email3='3@ya.ru'))
+        app.contact.create(Contact(name="NAME", lastname='LASTNAME', address='ADDRESS', landline='11', mobile='22', workphone='33', email='1@mail.ru', email2='2@gmail.com', email3='3@ya.ru', second_landline='44'))
     old_contacts = app.contact.get_contact_list_split()
     index = randrange(len(old_contacts))
-    modified_contact = Contact(mobile="cell#edited")
+    modified_contact = Contact(mobile="cell EDITED")
     modified_contact.id = old_contacts[index].id
     app.contact.modify_contact_by_index(index, modified_contact)
 
@@ -37,7 +37,7 @@ def test_modify_contact_phone(app):
 
 def test_modify_contact_email(app):
     if app.contact.count() == 0:
-        app.contact.create(Contact(name="NAME", lastname='LASTNAME', address='ADDRESS', landline='11', mobile='22', workphone='33', email='1@mail.ru', email2='2@gmail.com', email3='3@ya.ru'))
+        app.contact.create(Contact(name="NAME", lastname='LASTNAME', address='ADDRESS', landline='11', mobile='22', workphone='33', email='1@mail.ru', email2='2@gmail.com', email3='3@ya.ru', second_landline='44'))
     old_contacts = app.contact.get_contact_list_split()
     index = randrange(len(old_contacts))
     modified_contact = Contact(email="EDITED@somemail.com")
@@ -54,16 +54,18 @@ def test_modify_contact_email(app):
 
 def test_modify_contact_landline(app):
     if app.contact.count() == 0:
-        app.contact.create(Contact(name="NAME", lastname='LASTNAME', address='ADDRESS', landline='11', mobile='22', workphone='33', email='1@mail.ru', email2='2@gmail.com', email3='3@ya.ru'))
+        app.contact.create(Contact(name="NAME", lastname='LASTNAME', address='ADDRESS', landline='11', mobile='22', workphone='33', email='1@mail.ru', email2='2@gmail.com', email3='3@ya.ru', second_landline='44'))
     old_contacts = app.contact.get_contact_list_split()
     index = randrange(len(old_contacts))
-    modified_contact = Contact(landline="Landline#edited")
+    modified_contact = Contact(landline="Landline EDITED")
     modified_contact.id = old_contacts[index].id
     app.contact.modify_contact_by_index(index, modified_contact)
+
     assert len(old_contacts) == app.contact.count()
     new_contacts = app.contact.get_contact_list_split()
     old_contacts[index].email = modified_contact.email
     print('old: ', old_contacts, 'new: ', new_contacts)
+
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 

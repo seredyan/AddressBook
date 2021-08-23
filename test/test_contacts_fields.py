@@ -30,7 +30,9 @@ def test_fields_on_homepage(app):  # метод ПРЯМОЙ  проверки
     assert contact_from_home_page.landline == clear(contact_from_edit_page.landline)
     assert contact_from_home_page.mobile == clear(contact_from_edit_page.mobile)
     assert contact_from_home_page.workphone == clear(contact_from_edit_page.workphone)
+    assert contact_from_home_page.second_landline == clear(contact_from_edit_page.second_landline)
+
 
 
 def clear(s):
-    return re.sub("[() -]", "", s) # убираем в телефонах круглые скобки, пробелы и тире(чтобы при проверке исключить разные формы ввода номеров)
+    return re.sub("[() -+]", "", s) # убираем в телефонах круглые скобки, пробелы и тире и плюс (чтобы при проверке исключить разные формы ввода номеров)
