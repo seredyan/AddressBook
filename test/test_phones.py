@@ -1,5 +1,7 @@
 
 
+# Задание № 14
+
 import re
 from random import randrange
 
@@ -11,6 +13,8 @@ def test_phones_on_homepage(app): # метод ОБРАТНОЙ проверки
     contact_from_home_page = app.contact.get_contact_list_join()[index]
     contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
 
+    print('телефоны с гл страницы: ', contact_from_home_page.all_phones_from_home_page)
+    print('телефоны с edit страницы: ', merge_phones_like_on_home_page(contact_from_edit_page))
     assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)
     assert contact_from_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(contact_from_edit_page)
 
@@ -40,7 +44,7 @@ def test_phones_on_homepage(app): # метод ОБРАТНОЙ проверки
 #     # assert contact_from_view_page.email == contact_from_edit_page.email
 
 
-def test_phones_on_contact_view_page(app):   # метод ОБРАТНОЙ  проверки
+def test_phones_and_emails_on_contact_view_page(app):   # метод ОБРАТНОЙ  проверки
     all_contacts = app.contact.get_contact_list_join()
     index = randrange(len(all_contacts))
     contact_from_view_page = app.contact.get_contact_from_view_page_join(index)
@@ -49,7 +53,7 @@ def test_phones_on_contact_view_page(app):   # метод ОБРАТНОЙ  пр
     assert merge_phones_like_on_view_page(contact_from_view_page) == merge_phones_like_on_home_page(contact_from_edit_page)
     assert contact_from_view_page.all_emails_from_view_page == merge_emails_like_on_home_page(contact_from_edit_page)
 
-    # assert contact_from_view_page.all_phones_from_view_page == merge_phones_like_on_home_page(contact_from_edit_page)
+
 
 
 
