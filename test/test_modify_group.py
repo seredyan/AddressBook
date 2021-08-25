@@ -17,7 +17,7 @@ def test_modify_group_name(app, db, check_ui):
 
     new_groups = db.get_group_list()
 
-    old_groups[index] = modified_group  # делаем замену групп (но id не изменится, тк мы его сохранили выше)
+    old_groups[index] = modified_group  # делаем замену групп (но id не изменится, тк мы его сохранили выше) это чтобы assert совпадал
     assert old_groups == new_groups
     # assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)  # сравнение соответствия физичского НАЛИЯЧИЯ той или иной группы
 

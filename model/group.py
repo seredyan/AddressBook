@@ -14,13 +14,13 @@ class Group:
         self.id = id
 
 
-    def __repr__(self):
-        return "%s:%s:%s:%s" % (self.id, self.name, self.header, self.footer)     # цель- увидеть физические имена объектов (см ролик 4_2 compare_lists)
+    def __repr__(self):  # цель- УВИДЕТЬ физические имена объектов (см ролик 4_2 compare_lists), выводит содержимое объектов вместо того чтобы просто ук их адреса в памяти
+        return "%s:%s:%s:%s" % (self.id, self.name, self.header, self.footer)
 
 
-    def __eq__(self, other):
-        return (self.id is None or other.id is None or self.id == other.id) and self.name == other.name  # для сравнения НЕ физ адресов объектов, а ЛОГИЧЕСКОЕ сравнение
-                                                                 # (см ролик 4_2 compare_lists)
+    def __eq__(self, other): # для сравнения НЕ физ АДРЕСОВ объектов, а ЛОГИЧЕСКОЕ сравнение (тк внешне могут быть идентичными, но разными объектами с разными адресами в оперативке)
+        return (self.id is None or other.id is None or self.id == other.id) and self.name == other.name   # оставили только name потому что др данные не видны на гл странице
+                                                                 # (см ролик 4_2 и 4_3 compare_lists)
 
 
     def id_or_max(self): #  вычисляет по группе ключ, используемый для сравнения

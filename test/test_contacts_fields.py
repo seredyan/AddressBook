@@ -1,6 +1,5 @@
 
 
-#  Задание № 14
 from model.contact import Contact
 import re
 import random
@@ -9,7 +8,7 @@ import random
 
 def test_fields_on_homepage(app, db, check_ui):  # метод ПРЯМОЙ  проверки
     if db.get_contact_list() == 0:
-        app.contact.create(Contact(name="test", lastname="test", address='test address', email='test@email.com', mobile='777'))
+        app.contact.create(Contact(name="testName", lastname="testLastname", address='test Address', email='test1@mail.com', email2='test2@mail.com', email3='test3@mail.com', landline='11', mobile='22', workphone='33'))
     all_contacts = db.get_contact_list()
     selected_contact = random.choice(all_contacts)
     index = all_contacts.index(selected_contact)
@@ -25,6 +24,14 @@ def test_fields_on_homepage(app, db, check_ui):  # метод ПРЯМОЙ  пр
     assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)
 
 
+def test_all_contacts_on_home_page_to_dbase(app, db):
+    all_contacts = db.get_contact_list()
+    contacts_from_home_page = app.contact.get_contact_list_join()
+
+    print('количество в БД: ', len(all_contacts), 'количесво на гл странице: ', len(contacts_from_home_page))
+    print('DB: ', all_contacts, 'homepage: ', contacts_from_home_page)
+
+    assert all_contacts == contacts_from_home_page
 
 
 
@@ -40,7 +47,7 @@ def merge_emails_like_on_home_page(contact):
 
 
 def clear(s):
-    return re.sub("[() -+]", "", s) # убираем в телефонах круглые скобки, пробелы и тире(чтобы при проверке исключить разные формы ввода номеров)
+    return re.sub("[() -+]", "", s) # убираем в телефонах круглые скобки, пробелы, тире  и плюсы(чтобы при проверке исключить разные формы ввода номеров)
 
 
 
