@@ -156,6 +156,7 @@ class ContactHelper:
                 cells = row.find_elements_by_tag_name("td")
                 first_name = cells[2].text
                 last_name = cells[1].text
+                address = cells[3].text
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value")
                 all_emails = cells[4].text
                 all_phones = cells[5].text
@@ -165,7 +166,7 @@ class ContactHelper:
                 # last_name = row.find_elements_by_tag_name("td")[1].text   # первая колонка таблицы
                 # id = row.find_element_by_name("selected[]").get_attribute("value")
                 # all_phones = row.find_elements_by_tag_name("td")[5].text.splitlines()
-                self.contact_cache.append(Contact(name=first_name, lastname=last_name, id=id, all_emails_from_home_page=all_emails, all_phones_from_home_page=all_phones))
+                self.contact_cache.append(Contact(name=first_name, lastname=last_name, id=id, address=address, all_emails_from_home_page=all_emails, all_phones_from_home_page=all_phones))
         return list(self.contact_cache)
 
 

@@ -1,15 +1,9 @@
 
 
-#  Задание № 14
-
 import re
 
 from random import randrange
 from model.contact import Contact
-
-
-
-
 
 
 def test_fields_on_homepage(app):  # метод ПРЯМОЙ  проверки
@@ -27,11 +21,6 @@ def test_fields_on_homepage(app):  # метод ПРЯМОЙ  проверки
     assert contact_from_home_page.lastname == contact_from_edit_page.lastname
 
     assert contact_from_home_page.address == contact_from_edit_page.address
-
-    print('телефоны с гл страницы: ', contact_from_home_page.all_phones_from_home_page)
-    print('имя: ', contact_from_home_page.name)
-    print('фамилия: ', contact_from_home_page.lastname)
-    print('адрес: ', contact_from_home_page.address)
 
     assert contact_from_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(contact_from_edit_page)
     assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)
