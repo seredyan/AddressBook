@@ -25,7 +25,7 @@ class Contact:
 
 
     def __repr__(self):
-        return "%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (self.id, self.lastname, self.name, self.address, self.email, self.email2, self.email3, self.landline, self.mobile, self.workphone, self.second_landline) # цель- увидеть физические имена объектов (см ролик 4_2 compare_lists)
+        return "%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (self.id, self.lastname, self.name, self.address, self.email, self.email2, self.email3, self.landline, self.mobile, self.workphone, self.second_landline, self.all_phones_from_home_page,  self.all_emails_from_home_page) # цель- увидеть физические имена объектов (см ролик 4_2 compare_lists)
                                                                  # поменял порядок  name и lastname - как на веб приложении
 
     def __eq__(self, other):

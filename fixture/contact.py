@@ -196,9 +196,8 @@ class ContactHelper:
         # return list(self.contact_cache)
 
                 self.contact_cache.append(Contact(name=first_name, lastname=last_name, id=id, address=address, email=emails[0], email2=emails[1], email3=emails[2], landline=all_phones[0],
-                    mobile=all_phones[1], workphone=all_phones[2], second_landline=all_phones[3]))
+                    mobile=all_phones[1], workphone=all_phones[2], second_landline=all_phones[3]))#, all_emails_from_home_page=emails, all_phones_from_home_page=all_phones))
         return list(self.contact_cache)
-
 
 
     def get_contact_info_from_edit_page(self, index):
