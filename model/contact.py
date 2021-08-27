@@ -4,7 +4,7 @@ from sys import maxsize
 
 class Contact:
 
-    def __init__(self, name=None, lastname=None, address=None, landline=None, mobile=None, workphone=None,
+    def __init__(self, name=None, lastname=None, address=None, landline=None, mobile=None, workphone=None, second_landline=None,
                  all_phones_from_home_page=None, all_phones_from_view_page=None, email=None,  email2=None,  email3=None, id=None, all_emails_from_home_page=None,
                  all_emails_from_view_page=None):
         self.name = name
@@ -13,6 +13,7 @@ class Contact:
         self.landline = landline
         self.mobile = mobile
         self.workphone = workphone
+        self.second_landline = second_landline
         self.all_phones_from_home_page = all_phones_from_home_page
         self.all_phones_from_view_page = all_phones_from_view_page
         self.email = email
@@ -23,7 +24,7 @@ class Contact:
         self.all_emails_from_view_page = all_emails_from_view_page
 
     def __repr__(self): # выводит содержимое объектов вместо того чтобы просто ук их адреса в памяти
-        return "%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (self.id, self.lastname, self.name, self.address, self.email, self.email2, self.email3, self.landline, self.mobile, self.workphone, self.all_emails_from_home_page, self.all_phones_from_home_page) # цель- увидеть физические имена объектов (см ролик 4_2 compare_lists)
+        return "%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (self.id, self.lastname, self.name, self.address, self.email, self.email2, self.email3, self.landline, self.mobile, self.workphone, self.second_landline, self.all_emails_from_home_page, self.all_phones_from_home_page) # цель- увидеть физические имена объектов (см ролик 4_2 compare_lists)
                                                                  # поменял порядок  name и lastname - как на веб приложении
 
     def __eq__(self, other):

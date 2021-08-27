@@ -147,6 +147,8 @@ class ContactHelper:
         self.change_field_value("email", contact.email)
         self.change_field_value("email2", contact.email2)
         self.change_field_value("email3", contact.email3)
+        self.change_field_value("phone2", contact.second_landline)
+
 
 
         # wd.find_element_by_name("firstname").click()
@@ -232,7 +234,7 @@ class ContactHelper:
         # return list(self.contact_cache)
 
                 self.contact_cache.append(Contact(name=first_name, lastname=last_name, id=id, address=address, email=emails[0], email2=emails[1], email3=emails[2], landline=all_phones[0],
-                    mobile=all_phones[1], workphone=all_phones[2]))
+                    mobile=all_phones[1], workphone=all_phones[2], second_landline=all_phones[3]))
         return list(self.contact_cache)
 
 
@@ -250,10 +252,11 @@ class ContactHelper:
         landline = wd.find_element_by_name("home").get_attribute("value")
         mobile = wd.find_element_by_name("mobile").get_attribute("value")
         workphone = wd.find_element_by_name("work").get_attribute("value")
+        second_landline = wd.find_element_by_name("phone2").get_attribute("value")
         # fax = wd.find_element_by_name("fax").get_attribute("value")
         return Contact(name=first_name, lastname=last_name, id=id, address=address, email=email, email2=email2, email3=email3,
                        landline=landline, mobile=mobile,
-                       workphone=workphone)#, fax=fax)
+                       workphone=workphone, second_landline=second_landline)#, fax=fax)
 
 
 
@@ -279,10 +282,9 @@ class ContactHelper:
         landline = re.search("H: (.*)", text).group(1)
         mobile = re.search("M: (.*)", text).group(1)
         workphone = re.search("W: (.*)", text).group(1)
+        second_landline = re.search("P: (.*)", text).group(1)
 
-
-
-        return Contact(landline=landline, mobile=mobile, workphone=workphone)# email=email)
+        return Contact(landline=landline, mobile=mobile, workphone=workphone, second_landline=second_landline)# email=email)
 
 
 
@@ -291,8 +293,13 @@ class ContactHelper:
         self.open_contact_view_by_index(index)
         text = wd.find_element_by_id("content").text
         all_info_on_page = re.search('H: (.*)\nM: (.*)\nW: (.*)', text).group()
+        add_phone = re.search('P: (.*)', text).group()
+        phone2 = re.sub('P:', '\n', add_phone)
+
         all_phones_on_page = re.findall(r'[^H:M:W:]', all_info_on_page)
         all_phones = ''.join(all_phones_on_page)
+
+        total_phones = all_phones + phone2
 
         emails_list = re.findall("([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)", text)
         all_emails = '\n'.join(emails_list)
@@ -317,6 +324,4 @@ class ContactHelper:
         # all_phones = '\n'.join(phones_list)
 
 
-
-
-        return Contact(all_phones_from_view_page=all_phones, all_emails_from_view_page=all_emails)
+        return Contact(all_phones_from_view_page=total_phones, all_emails_from_view_page=all_emails)

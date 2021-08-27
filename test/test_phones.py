@@ -63,7 +63,7 @@ def test_phones_and_emails_on_contact_view_page(app):   # метод ОБРАТ�
 
 
 def merge_phones_like_on_home_page(contact):
-    return "\n".join(filter(lambda x: x != "", map(lambda x: clear(x), filter(lambda x: x is not None, [contact.landline, contact.mobile, contact.workphone]))))
+    return "\n".join(filter(lambda x: x != "", map(lambda x: clear(x), filter(lambda x: x is not None, [contact.landline, contact.mobile, contact.workphone, contact.second_landline]))))
 
 def merge_phones_like_on_view_page(contact):
     return "\n".join(filter(lambda x: x != "", map(lambda x: clear(x), filter(lambda x: x is not None, [contact.all_phones_from_view_page]))))
