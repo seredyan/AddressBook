@@ -2,6 +2,7 @@
 import pymysql.cursors
 from model.group import Group
 from model.contact import Contact
+import re
 
 
 
@@ -38,7 +39,7 @@ class DbFixture:
             cursor.execute("select id, firstname, lastname, address, home, mobile, work, email, email2, email3, phone2 from addressbook where deprecated='0000-00-00 00:00:00'")
             for row in cursor:
                 (id, firstname, lastname, address, home, mobile, work, email, email2, email3, phone2) = row  # присвоится значения сразу в 4 переменные, каждой из них присвотся соотв эл-т кортежа
-                list.append(Contact(id=str(id), name=firstname, lastname=lastname, address=address, landline=home, mobile=mobile, workphone=work, email=email, email2=email2, email3=email3, second_landline=phone2))
+                list.append(Contact(id=str(id), name=firstname, lastname=lastname, address=address, landline=home, mobile=mobile, workphone=work, email=email, email2=email2, email3=email3, second_landline=phone2, all_emails_from_home_page=str(email+email2+email3), all_phones_from_home_page=str(home+mobile+work+phone2)))
         finally:
             cursor.close()
         return list
@@ -47,3 +48,16 @@ class DbFixture:
 
     def destroy(self):
         self.connection.close()
+
+
+
+# def merge_all_emails(contact):
+#     return "\n".join(filter(lambda x: x != "", map(lambda x: clear(x), filter(lambda x: x is not None, [contact.email, contact.email2, contact.email3]))))
+#
+#
+# def merge_all_phones(contact):
+#     return "\n".join(filter(lambda x: x != "", map(lambda x: clear(x), filter(lambda x: x is not None, [contact.landline, contact.mobile, contact.workphone, contact.second_landline]))))
+#
+#
+# def clear(s):
+#     return re.sub("[() -+]", "", s)
