@@ -25,6 +25,8 @@ def test_fields_on_homepage(app):  # метод ПРЯМОЙ  проверки
     assert contact_from_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(contact_from_edit_page)
     assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)
 
+    print(contact_from_home_page.all_phones_from_home_page)
+    print(merge_phones_like_on_home_page(contact_from_edit_page))
 
 
 
@@ -33,8 +35,11 @@ def merge_phones_like_on_home_page(contact):
 
 
 def merge_emails_like_on_home_page(contact):
-    return "\n".join(filter(lambda x: x != "", map(lambda x: clear(x), filter(lambda x: x is not None, [contact.email, contact.email2, contact.email3]))))
+    return "\n".join(filter(lambda x: x != "", map(lambda x: clear_email(x), filter(lambda x: x is not None, [contact.email, contact.email2, contact.email3]))))
 
 
 def clear(s):
-    return re.sub("[() -+]", "", s) # убираем в телефонах круглые скобки, пробелы и тире и плюс (чтобы при проверке исключить разные формы ввода номеров)
+    return re.sub("[() -]", "", s) # убираем в телефонах круглые скобки, пробелы и тире и плюс (чтобы при проверке исключить разные формы ввода номеров)
+
+def clear_email(s):
+    return re.sub("[ ]", "", s)
