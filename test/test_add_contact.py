@@ -21,7 +21,8 @@ def test_add_new_contact(app, json_contacts, db, check_ui):
 
     print('  старые: ', old_contacts, 'новые: ', new_contacts)
 
-    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+    assert old_contacts == new_contacts
+
 
     if check_ui:
         assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contact_list_split(), key=Contact.id_or_max)
@@ -72,7 +73,8 @@ def test_add_new_single_contact(app, db):
 
     print('  старые: ', old_contacts, 'новые: ', new_contacts)
 
-    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+    assert old_contacts == new_contacts
+
 
 
 

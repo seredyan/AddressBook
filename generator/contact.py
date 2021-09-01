@@ -31,7 +31,7 @@ def random_string(prefix, maxlen):
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 def random_char_email(maxlen):
-    random_emails = ["@gmail.com", "@ya.ru", "@mail.ru", "@icloud.com", "@company.com", "@yahoo.com", "@outlook.com"]
+    random_emails = ["a@gmail.com", "b@ya.ru", "c@mail.ru", "d@icloud.com", "e@company.com", "f@yahoo.com", "g@outlook.com"]
     symbols = (''.join(random.choice(string.ascii_letters + string.digits) for _ in range(random.randrange(maxlen))))
     return (symbols + random.choice(random_emails))
 
@@ -46,7 +46,7 @@ testdata = [Contact(name=random_string("NAME", 2), lastname=random_string("LASTN
                     landline=random_digits_phone(3),
                     mobile=random_digits_phone(3), workphone=random_digits_phone(3),
                     second_landline=random_digits_phone(3),
-            email=random_char_email(2), email2=random_char_email(2), email3=random_char_email(2)) for i in range(n)]
+            email=random_char_email(3), email2=random_char_email(3), email3=random_char_email(3)) for i in range(n)]
 
 
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
