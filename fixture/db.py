@@ -36,10 +36,13 @@ class DbFixture:
         list = []
         cursor = self.connection.cursor()
         try:
-            cursor.execute("select id, firstname, lastname, address, home, mobile, work, email, email2, email3, phone2 from addressbook where deprecated='0000-00-00 00:00:00'")
+            cursor.execute("select id, firstname, lastname, address, home, mobile, work, email, email2, email3, "
+                           "phone2 from addressbook where deprecated='0000-00-00 00:00:00'")
             for row in cursor:
                 (id, firstname, lastname, address, home, mobile, work, email, email2, email3, phone2) = row  # присвоится значения сразу в 4 переменные, каждой из них присвотся соотв эл-т кортежа
-                list.append(Contact(id=str(id), name=firstname, lastname=lastname, address=address, all_phones_from_home_page=merge_phones_like_on_home_page(home, mobile, work, phone2), all_emails_from_home_page=merge_emails_like_on_home_page(email, email2, email3)))
+                list.append(Contact(id=str(id), name=firstname, lastname=lastname, address=address,
+                                    all_phones_from_home_page=merge_phones_like_on_home_page(home, mobile, work, phone2),
+                                    all_emails_from_home_page=merge_emails_like_on_home_page(email, email2, email3)))
         finally:
             cursor.close()
         return list

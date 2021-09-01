@@ -204,7 +204,9 @@ class ContactHelper:
                 # last_name = row.find_elements_by_tag_name("td")[1].text   # первая колонка таблицы
                 # id = row.find_element_by_name("selected[]").get_attribute("value")
                 # all_phones = row.find_elements_by_tag_name("td")[5].text.splitlines()
-                self.contact_cache.append(Contact(name=first_name, lastname=last_name, address=address, id=id, all_emails_from_home_page=all_emails, all_phones_from_home_page=all_phones))
+                self.contact_cache.append(Contact(name=first_name, lastname=last_name,
+                                                  address=address, id=id, all_emails_from_home_page=all_emails,
+                                                  all_phones_from_home_page=all_phones))
 
         return list(self.contact_cache)
 
@@ -224,7 +226,9 @@ class ContactHelper:
                 all_emails = cells[4].text
                 all_phones = cells[5].text
 
-                self.contact_cache.append(Contact(name=first_name, lastname=last_name, address=address, id=id, all_emails_from_home_page=all_emails.split(), all_phones_from_home_page=all_phones.split()))
+                self.contact_cache.append(Contact(name=first_name, lastname=last_name, address=address,
+                                                  id=id, all_emails_from_home_page=all_emails.split(),
+                                                  all_phones_from_home_page=all_phones.split()))
 
         return list(self.contact_cache)
 
@@ -249,8 +253,10 @@ class ContactHelper:
                 # id = row.find_element_by_name("selected[]").get_attribute("value")
                 # all_phones = row.find_elements_by_tag_name("td")[5].text.splitlines()
 
-                self.contact_cache.append(Contact(name=first_name, lastname=last_name, id=id, address=address, email=emails[0], email2=emails[1], email3=emails[2], landline=all_phones[0],
-                    mobile=all_phones[1], workphone=all_phones[2], second_landline=all_phones[3]))
+                self.contact_cache.append(Contact(name=first_name, lastname=last_name,
+                                                  id=id, address=address, email=emails[0], email2=emails[1], email3=emails[2],
+                                                  landline=all_phones[0], mobile=all_phones[1], workphone=all_phones[2],
+                                                  second_landline=all_phones[3]))
 
         return list(self.contact_cache)
 

@@ -4,8 +4,10 @@ from model.contact import Contact
 from random import randrange
 
 def test_modify_contact_address(app, db, check_ui):
-    if db.get_contact_list() == 0:
-        app.contact.create(Contact(name="testName", lastname="testLastname", address='test Address', email='test1@mail.com', email2='test2@mail.com', email3='test3@mail.com', landline='11', mobile='22', workphone='33', second_landline='44'))
+    if db.get_contact_list() == []:
+        app.contact.create(Contact(name="testName", lastname="testLastname", address='test Address',
+                                   email='test1@mail.com', email2='test2@mail.com', email3='test3@mail.com',
+                                   landline='11', mobile='22', workphone='33', second_landline='44'))
 
     old_contacts = db.get_contact_list()
     selected_contact = random.choice(old_contacts)
@@ -25,8 +27,10 @@ def test_modify_contact_address(app, db, check_ui):
 
 
 def test_modify_contact_phone(app, db, check_ui):
-    if db.get_contact_list() == 0:
-        app.contact.create(Contact(name="testName", lastname="testLastname", address='test Address', email='test1@mail.com', email2='test2@mail.com', email3='test3@mail.com', landline='11', mobile='22', workphone='33', second_landline='44'))
+    if db.get_contact_list() == []:
+        app.contact.create(Contact(name="testName", lastname="testLastname", address='test Address',
+                                   email='test1@mail.com', email2='test2@mail.com', email3='test3@mail.com',
+                                   landline='11', mobile='22', workphone='33', second_landline='44'))
 
     old_contacts = db.get_contact_list()
     selected_contact = random.choice(old_contacts)
@@ -48,8 +52,10 @@ def test_modify_contact_phone(app, db, check_ui):
 
 
 def test_modify_contact_email(app, db, check_ui):
-    if db.get_contact_list() == 0:
-        app.contact.create(Contact(name="testName", lastname="testLastname", address='test Address', email='test1@mail.com', email2='test2@mail.com', email3='test3@mail.com', landline='11', mobile='22', workphone='33', second_landline='44'))
+    if db.get_contact_list() == []:
+        app.contact.create(Contact(name="testName", lastname="testLastname", address='test Address',
+                                   email='test1@mail.com', email2='test2@mail.com', email3='test3@mail.com',
+                                   landline='11', mobile='22', workphone='33', second_landline='44'))
 
     old_contacts = db.get_contact_list()
     selected_contact = random.choice(old_contacts)
@@ -72,8 +78,10 @@ def test_modify_contact_email(app, db, check_ui):
 
 
 def test_modify_contact_landline(app, db, check_ui):
-    if db.get_contact_list() == 0:
-        app.contact.create(Contact(name="testName", lastname="testLastname", address='test Address', email='test1@mail.com', email2='test2@mail.com', email3='test3@mail.com', landline='11', mobile='22', workphone='33', second_landline='44'))
+    if db.get_contact_list() == []:
+        app.contact.create(Contact(name="testName", lastname="testLastname", address='test Address',
+                                   email='test1@mail.com', email2='test2@mail.com', email3='test3@mail.com',
+                                   landline='11', mobile='22', workphone='33', second_landline='44'))
 
     old_contacts = db.get_contact_list()
     selected_contact = random.choice(old_contacts)

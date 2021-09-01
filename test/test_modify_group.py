@@ -6,7 +6,7 @@ from random import randrange
 
 
 def test_modify_group_name(app, db, check_ui):
-    if app.group.count() == 0:
+    if db.get_group_list() == []:
         app.group.create(Group(name="test"))
     old_groups = db.get_group_list()
     selected_group = random.choice(old_groups)
@@ -29,7 +29,7 @@ def test_modify_group_name(app, db, check_ui):
 
 
 def test_modify_group_header(app,  db, check_ui):
-    if app.group.count() == 0:
+    if db.get_group_list() == []:
         app.group.create(Group(name="test"))
     old_groups = db.get_group_list()
     selected_group = random.choice(old_groups)

@@ -4,8 +4,10 @@ from sys import maxsize
 
 class Contact:
 
-    def __init__(self, name=None, lastname=None, address=None, landline=None, mobile=None, workphone=None, second_landline=None,
-                 all_phones_from_home_page=None, all_phones_from_view_page=None, email=None,  email2=None,  email3=None, id=None, all_emails_from_home_page=None,
+    def __init__(self, name=None, lastname=None, address=None, landline=None, mobile=None, workphone=None,
+                 second_landline=None,
+                 all_phones_from_home_page=None, all_phones_from_view_page=None, email=None,  email2=None,  email3=None,
+                 id=None, all_emails_from_home_page=None,
                  all_emails_from_view_page=None):
         self.name = name
         self.lastname = lastname
@@ -24,11 +26,18 @@ class Contact:
         self.all_emails_from_view_page = all_emails_from_view_page
 
     def __repr__(self): # выводит содержимое объектов вместо того чтобы просто ук их адреса в памяти
-        return "%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (self.id, self.lastname, self.name, self.address, self.landline, self.mobile, self.workphone, self.second_landline, self.email, self.email2, self.email3, self.all_emails_from_home_page, self.all_phones_from_home_page) # цель- увидеть физические имена объектов (см ролик 4_2 compare_lists)
+        return "%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (self.id, self.lastname, self.name, self.address,
+                                                           self.landline, self.mobile, self.workphone, self.second_landline,
+                                                           self.email, self.email2, self.email3, self.all_emails_from_home_page,
+                                                           self.all_phones_from_home_page)
+        # цель- увидеть физические имена объектов (см ролик 4_2 compare_lists)
                                                                  # поменял порядок  name и lastname - как на веб приложении
 
     def __eq__(self, other):
-        return (self.id is None or other.id is None or self.id == other.id) and self.lastname == other.lastname and self.name == other.name and self.address == other.address and self.all_phones_from_home_page == other.all_phones_from_home_page and self.all_emails_from_home_page == other.all_emails_from_home_page
+        return (self.id is None or other.id is None or self.id == other.id) and self.lastname == other.lastname and \
+               self.name == other.name and self.address == other.address and \
+               self.all_phones_from_home_page == other.all_phones_from_home_page and \
+               self.all_emails_from_home_page == other.all_emails_from_home_page
         # для сравнения НЕ ФИЗ АДРЕСОВ объектов, а ЛОГИЧ сравнение (тк внешне могут быть идентичными, но разными оюъектами с разными адресами в оперативке)
                                                                  # (см ролик 4_2 compare_lists)
 

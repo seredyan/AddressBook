@@ -61,7 +61,8 @@ def test_add_new_single_contact(app, db):
 
     added_contact = Contact(name="AA",
                                lastname="BB", address="ADD",
-                               landline="11", mobile="22", workphone='33', second_landline='44', email="C1@YA.RU", email2="C2@YA.RU", email3="C3@YA.RU")
+                               landline="11", mobile="22", workphone='33', second_landline='44',
+                            email="C1@YA.RU", email2="C2@YA.RU", email3="C3@YA.RU")
 
     added_contact.all_phones_from_home_page = [added_contact.landline, added_contact.mobile, added_contact.workphone,
                                                added_contact.second_landline]

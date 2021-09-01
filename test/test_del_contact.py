@@ -6,7 +6,7 @@ from random import randrange
 
 
 def test_delete_some_contact(app, db, check_ui):
-    if db.get_contact_list() == 0:
+    if db.get_contact_list() == []:
         app.contact.create(Contact(name="test"))
     old_contacts = db.get_contact_list()
     selected_contact = random.choice(old_contacts)

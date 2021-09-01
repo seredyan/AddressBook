@@ -5,7 +5,7 @@ from random import randrange
 
 
 def test_delete_some_group(app, db, check_ui):
-    if len(db.get_group_list()) == 0:
+    if db.get_group_list() == []:
         app.group.create(Group(name="test"))
     old_groups = db.get_group_list()
     selected_group = random.choice(old_groups)

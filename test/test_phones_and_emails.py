@@ -3,10 +3,15 @@
 
 import re
 from random import randrange
+from model.contact import Contact
 
 
 
 def test_phones_on_homepage(app): # метод ОБРАТНОЙ проверки РАНДОМНЫЙ контакт
+    if app.contact.count() == 0:
+        app.contact.create(Contact(name="testName", lastname="testLastname", address='test Address', email='test1@mail.com',
+                               email2='test2@mail.com', email3='test3@mail.com', landline='11', mobile='22',
+                               workphone='33', second_landline='44'))
     all_contacts = app.contact.get_contact_list_join()
     index = randrange(len(all_contacts))
     contact_from_home_page = app.contact.get_contact_list_join()[index]
@@ -45,6 +50,10 @@ def test_phones_on_homepage(app): # метод ОБРАТНОЙ проверки
 
 
 def test_phones_and_emails_on_contact_view_page(app):   # метод ОБРАТНОЙ  проверки
+    if app.contact.count() == 0:
+        app.contact.create(Contact(name="testName", lastname="testLastname", address='test Address', email='test1@mail.com',
+                               email2='test2@mail.com', email3='test3@mail.com', landline='11', mobile='22',
+                               workphone='33', second_landline='44'))
     all_contacts = app.contact.get_contact_list_join()
     index = randrange(len(all_contacts))
     contact_from_view_page = app.contact.get_contact_from_view_page_join(index)
