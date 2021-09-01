@@ -21,7 +21,7 @@ def test_modify_contact_address(app, db, check_ui):
     assert old_contacts == new_contacts
 
     if check_ui:
-        assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contact_list_split(), key=Contact.id_or_max)
+        assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contact_list_join_for_db(), key=Contact.id_or_max)
 
 
 def test_modify_contact_phone(app, db, check_ui):
@@ -43,7 +43,7 @@ def test_modify_contact_phone(app, db, check_ui):
     assert old_contacts == new_contacts
 
     if check_ui:
-        assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contact_list_split(),
+        assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contact_list_join_for_db(),
                                                                      key=Contact.id_or_max)
 
 
@@ -66,7 +66,7 @@ def test_modify_contact_email(app, db, check_ui):
     assert old_contacts == new_contacts
 
     if check_ui:
-        assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contact_list_split(),
+        assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contact_list_join_for_db(),
                                                                      key=Contact.id_or_max)
 
 
@@ -87,7 +87,7 @@ def test_modify_contact_landline(app, db, check_ui):
     assert old_contacts == new_contacts
 
     if check_ui:
-        assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contact_list_split(),
+        assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contact_list_join_for_db(),
                                                                      key=Contact.id_or_max)
 
 
