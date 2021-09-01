@@ -3,18 +3,19 @@
 
 
 from model.contact import Contact
+import re
 
 
 
-def test_add_new_contact(app, db, check_ui): #json_contacts):
-    # added_contact = json_contacts
+def test_add_new_contact(app, json_contacts, db, check_ui):
+
     old_contacts = db.get_contact_list()
-
-    added_contact = Contact(name="AA",
-                               lastname="BB", address="ADD",
-                               landline="55", mobile="66", workphone='77', second_landline='88', email="C1@YA.RU", email2="C2@YA.RU", email3="C3@YA.RU")
-
+    added_contact = json_contacts
     app.contact.create(added_contact)
+
+    added_contact.all_phones_from_home_page = [added_contact.landline, added_contact.mobile, added_contact.workphone, added_contact.second_landline]
+    added_contact.all_emails_from_home_page = [added_contact.email, added_contact.email2, added_contact.email3]
+
     new_contacts = db.get_contact_list()
     old_contacts.append(added_contact)
 
@@ -53,3 +54,39 @@ def test_add_new_contact(app, db, check_ui): #json_contacts):
 
 
 
+def test_add_new_single_contact(app, db):
+
+    old_contacts = db.get_contact_list()
+
+    added_contact = Contact(name="AA",
+                               lastname="BB", address="ADD",
+                               landline="11", mobile="22", workphone='33', second_landline='44', email="C1@YA.RU", email2="C2@YA.RU", email3="C3@YA.RU")
+
+    added_contact.all_phones_from_home_page = [added_contact.landline, added_contact.mobile, added_contact.workphone,
+                                               added_contact.second_landline]
+    added_contact.all_emails_from_home_page = [added_contact.email, added_contact.email2, added_contact.email3]
+
+    app.contact.create(added_contact)
+    old_contacts.append(added_contact)
+    new_contacts = db.get_contact_list()
+
+    print('  старые: ', old_contacts, 'новые: ', new_contacts)
+
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+
+
+
+
+def merge_phones_like_on_home_page(contact):
+    return "\n".join(filter(lambda x: x != "", map(lambda x: clear(x), filter(lambda x: x is not None, [contact.landline, contact.mobile, contact.workphone, contact.second_landline]))))
+
+
+def merge_emails_like_on_home_page(contact):
+    return "\n".join(filter(lambda x: x != "", map(lambda x: clear_emails(x), filter(lambda x: x is not None, [contact.email, contact.email2, contact.email3]))))
+
+def clear(s):
+    return re.sub("[() -]", "", s)
+
+
+def clear_emails(s):
+    return re.sub("[ ]", "", s)

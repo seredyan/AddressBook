@@ -7,7 +7,7 @@ import jsonpickle
 from model.contact import Contact
 import getopt
 import sys
-
+import re
 
 
 try:
@@ -42,9 +42,11 @@ def random_digits_phone(maxlen):
 
 
 
-testdata = [Contact(name=random_string("NAME", 5), lastname=random_string("LASTNAME", 5), address=random_string("countryX", 5),
-                    email=random_char_email(5), email2=random_char_email(5), email3=random_char_email(5), landline=random_digits_phone(11),
-                    mobile=random_digits_phone(11), workphone=random_digits_phone(11), second_landline=random_digits_phone(11)) for i in range(n)]
+testdata = [Contact(name=random_string("NAME", 2), lastname=random_string("LASTNAME", 2), address=random_string("countryX", 2),
+                    landline=random_digits_phone(3),
+                    mobile=random_digits_phone(3), workphone=random_digits_phone(3),
+                    second_landline=random_digits_phone(3),
+            email=random_char_email(2), email2=random_char_email(2), email3=random_char_email(2)) for i in range(n)]
 
 
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
@@ -53,3 +55,5 @@ file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
 with open(file, "w") as file_out:
     jsonpickle.set_encoder_options("json", indent=2)
     file_out.write(jsonpickle.encode(testdata))
+
+
