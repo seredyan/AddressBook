@@ -2,6 +2,8 @@
 import time
 import re
 from model.contact import Contact
+from selenium.webdriver.support.ui import Select
+import random
 
 class ContactHelper:
     def __init__(self, app):
@@ -89,6 +91,15 @@ class ContactHelper:
         self.contact_cache = None
 
 
+    def add_contact_into_group(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_some_contact_ui(index)
+
+        Select(wd.find_element_by_name("to_group")).select_by_visible_text("Third")
+        wd.find_element_by_name("add").click()
+        self.return_homepage()
+        self.contact_cache = None
 
 
 
