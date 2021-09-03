@@ -1,9 +1,10 @@
-
+import optparse
 import time
 import re
 from model.contact import Contact
 from selenium.webdriver.support.ui import Select
 import random
+
 
 class ContactHelper:
     def __init__(self, app):
@@ -94,10 +95,16 @@ class ContactHelper:
     def add_contact_into_group(self, index):
         wd = self.app.wd
         self.app.open_home_page()
+        # time.sleep(3)
         self.select_some_contact_ui(index)
-
-        Select(wd.find_element_by_name("to_group")).select_by_visible_text("Third")
+        # time.sleep(4)
+        wd.find_element_by_name("to_group").click()
+        all_options = wd.find_elements_by_tag_name("option")
+        random.choice(all_options).click()
+        # time.sleep(4)
+        # Select(wd.find_element_by_name("to_group")).select_by_visible_text('First') # пример добавления в конкретную группу(если она есть в списке)
         wd.find_element_by_name("add").click()
+        # time.sleep(4)
         self.return_homepage()
         self.contact_cache = None
 
