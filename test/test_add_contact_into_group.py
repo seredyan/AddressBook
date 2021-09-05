@@ -9,5 +9,5 @@ def test_add_contact_into_group(app, db):
 
 
     list_contacts = app.contact.get_contact_list_join()
-    index = randrange(len(list_contacts))
+    index = randrange(len(list_contacts) - 1)
     app.contact.add_contact_into_group(index)
