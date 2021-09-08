@@ -92,20 +92,22 @@ class ContactHelper:
         self.contact_cache = None
 
 
-    def add_contact_into_group(self, index):
+    def add_contact_into_group(self, id):
         wd = self.app.wd
         self.app.open_home_page()
-        # time.sleep(3)
-
-        # time.sleep(4)
+        self.select_deletable_contact_by_id(id)
         wd.find_element_by_name("to_group").click()
-        all_options = wd.find_elements_by_tag_name("option")
-        random.choice(all_options).click()
-        # time.sleep(4)
-        # Select(wd.find_element_by_name("to_group")).select_by_visible_text('First') # пример добавления в конкретную группу(если она есть в списке)
-        self.select_some_contact_ui(index)
+
+    ###*************************
+        # all_options = wd.find_elements_by_tag_name("option")  # на случай выбора случайной группы из выпадающего списка
+        # random.choice(all_options).click()  # на случай выбора случайной группы из выпадающего списка
+        ###
+        # Select(wd.find_element_by_name("to_group")).select_by_visible_text('Second') # пример добавления в конкретную группу(если она есть в списке)
+    ###*************************
+
+
         wd.find_element_by_name("add").click()
-        time.sleep(2)
+        time.sleep(1)
         # self.return_homepage()
         self.contact_cache = None
 

@@ -14,7 +14,7 @@ class DbFixture:
         self.user = user
         self.password = password
         self.connection = pymysql.connect(host=host, database=name, user=user, password=password, autocommit=True)
-                                                        # autocommit озн что кэш после кажд запроса сбрасывается (роли 7_4)
+                                                        # autocommit озн что кэш после кажд запроса сбрасывается (ролик 7_4)
 
 
     def get_group_list(self): #  загруж из БД инфу о группах
@@ -46,6 +46,21 @@ class DbFixture:
         finally:
             cursor.close()
         return list
+
+
+    def get_contacts_in_groups_list(self):
+        # data = {}
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select id, group_id from address_in_groups where deprecated='0000-00-00 00:00:00'")
+            for row in cursor:
+                (id, group_id) = row
+                data = dict(item for item in row)
+
+        finally:
+            cursor.close()
+        return data
+
 
 
 
