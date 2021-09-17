@@ -48,18 +48,51 @@ class DbFixture:
         return list
 
 
-    def get_contacts_in_groups_list(self):
-        # data = {}
+    def get_data_address_in_groups(self):
+        data = []
+        contacts = []
+        groups = []
         cursor = self.connection.cursor()
         try:
             cursor.execute("select id, group_id from address_in_groups where deprecated='0000-00-00 00:00:00'")
             for row in cursor:
                 (id, group_id) = row
-                data = dict(item for item in row)
+                data.append(row)
+                # data = dict(item for item in row)
+                contacts.append(id)
+                groups.append(group_id)
+
 
         finally:
             cursor.close()
-        return data
+        return data#, contacts, groups
+
+
+    def get_contact_list_by_id(self):
+        contacts = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select id from addressbook where deprecated='0000-00-00 00:00:00'")
+            for row in cursor:
+                contacts.append(row)
+        finally:
+            cursor.close()
+        return contacts
+
+
+    def get_group_list_by_id(self):
+        groups = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select group_id from group_list where deprecated='0000-00-00 00:00:00'")
+            for row in cursor:
+                groups.append(row)
+        finally:
+            cursor.close()
+        return groups
+
+
+
 
 
 

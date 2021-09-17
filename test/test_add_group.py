@@ -7,6 +7,7 @@ from model.group import Group
 
 
 def test_add_group(app, db, json_groups, check_ui):  # осущ связь тестовых ф-й с данными, хранящимися в файлах в формате json
+
     added_group = json_groups
     old_groups = db.get_group_list()
     app.group.create(added_group)
