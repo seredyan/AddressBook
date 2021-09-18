@@ -14,8 +14,8 @@ def test_add_missing_contact_into_group(app, db):
     if db.get_contact_list() == []:
         app.contact.create(Contact(name='test'))
 
-    test_datas = db.get_data_address_in_groups()
-    if test_datas == []:
+    test_data = db.get_data_address_in_groups()
+    if test_data == []:
         app.contact.add_first_contact_into_first_group()
 
     else:
@@ -85,12 +85,12 @@ def test_add_missing_contact_into_group(app, db):
         app.contact.add_contact_into_group(selected_contact, final_group)
 
         new_test_datas = db.get_data_address_in_groups()
-        test_datas.append((selected_contact, final_group))
+        test_data.append((selected_contact, final_group))
 
-        print(test_datas)
+        print(test_data)
         print(new_test_datas)
 
-        assert sorted(test_datas) == sorted(new_test_datas)
+        assert sorted(test_data) == sorted(new_test_datas)
 
 
 

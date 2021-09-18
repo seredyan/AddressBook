@@ -96,9 +96,9 @@ class ContactHelper:
         wd = self.app.wd
         self.app.open_home_page()
         Select(wd.find_element_by_name("to_group")).select_by_value(str(final_group))
-        time.sleep(1)
+        # time.sleep(1)
         self.select_deletable_contact_by_id(id)
-        time.sleep(1)
+        # time.sleep(1)
 
     ##*************************
         # all_options = wd.find_elements_by_tag_name("option")  # на случай выбора случайной группы из выпадающего списка
@@ -109,7 +109,7 @@ class ContactHelper:
     ###*************************
 
         wd.find_element_by_name("add").click()
-        time.sleep(1)
+        # time.sleep(1)
         # self.return_homepage()
         self.contact_cache = None
 
@@ -119,9 +119,22 @@ class ContactHelper:
         self.app.open_home_page()
         self.select_some_contact_ui(0)
         wd.find_element_by_name("add").click()
-        time.sleep(1)
+        time.sleep(0.5)
         # self.return_homepage()
         self.contact_cache = None
+
+
+    def remove_contact_from_group(self, contact, group):
+        wd = self.app.wd
+        self.app.open_home_page()
+
+        Select(wd.find_element_by_name("group")).select_by_value(str(group))
+        self.select_deletable_contact_by_id(contact)
+        wd.find_element_by_name("remove").click()
+        self.contact_cache = None
+
+
+
 
 
 
