@@ -84,13 +84,13 @@ def test_add_missing_contact_into_group(app, db):
 
         app.contact.add_contact_into_group(selected_contact, final_group)
 
-        new_test_datas = db.get_data_address_in_groups()
+        new_test_data = db.get_data_address_in_groups()
         test_data.append((selected_contact, final_group))
 
         print(test_data)
-        print(new_test_datas)
+        print(new_test_data)
 
-        assert sorted(test_data) == sorted(new_test_datas)
+        assert sorted(test_data) == sorted(new_test_data)
 
 
 
