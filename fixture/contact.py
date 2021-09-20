@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import Select
 import random
 
 
+
 class ContactHelper:
     def __init__(self, app):
         self.app = app
@@ -101,11 +102,13 @@ class ContactHelper:
         wd.find_element_by_name("to_group").click()
         all_options = wd.find_elements_by_tag_name("option")
         random.choice(all_options).click()
-        # time.sleep(4)
+        time.sleep(4)
         # Select(wd.find_element_by_name("to_group")).select_by_visible_text('First') # пример добавления в конкретную группу(если она есть в списке)
         wd.find_element_by_name("add").click()
-        # time.sleep(4)
-        self.return_homepage()
+        # time.sleep(7)
+
+        # wd.find_element_by_link_text("group page").click()
+        # self.return_homepage()
         self.contact_cache = None
 
 
