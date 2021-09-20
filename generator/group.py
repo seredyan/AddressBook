@@ -36,7 +36,7 @@ def random_string(prefix, maxlen):
 
 
 
-testdata = [Group(name="", header="", footer="")] + [
+testdata = [Group(name="gr1", header="", footer="")] + [
     Group(name=random_string("name", 4), header=random_string("header", 5), footer=random_string("footer", 5))
     for i in range(n)
 ]

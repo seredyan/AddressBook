@@ -6,7 +6,6 @@ from selenium.webdriver.support.ui import Select
 import random
 
 
-
 class ContactHelper:
     def __init__(self, app):
         self.app = app
@@ -93,23 +92,48 @@ class ContactHelper:
         self.contact_cache = None
 
 
-    def add_contact_into_group(self, index):
+    def add_contact_into_group(self, id, final_group):
         wd = self.app.wd
         self.app.open_home_page()
-        # time.sleep(3)
-        self.select_some_contact_ui(index)
-        # time.sleep(4)
-        wd.find_element_by_name("to_group").click()
-        all_options = wd.find_elements_by_tag_name("option")
-        random.choice(all_options).click()
-        time.sleep(4)
-        # Select(wd.find_element_by_name("to_group")).select_by_visible_text('First') # пример добавления в конкретную группу(если она есть в списке)
-        wd.find_element_by_name("add").click()
-        # time.sleep(7)
+        Select(wd.find_element_by_name("to_group")).select_by_value(str(final_group))
+        # time.sleep(1)
+        self.select_deletable_contact_by_id(id)
+        # time.sleep(1)
 
-        # wd.find_element_by_link_text("group page").click()
+    ##*************************
+        # all_options = wd.find_elements_by_tag_name("option")  # на случай выбора случайной группы из выпадающего списка
+        # random.choice(all_options).click()  # на случай выбора случайной группы из выпадающего списка
+        # time.sleep(6)
+        # ##
+        # Select(wd.find_element_by_name("to_group")).select_by_visible_text('Second') # пример добавления в конкретную группу(если она есть в списке)
+    ###*************************
+
+        wd.find_element_by_name("add").click()
+        # time.sleep(1)
         # self.return_homepage()
         self.contact_cache = None
+
+
+    def add_first_contact_into_first_group(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_some_contact_ui(0)
+        wd.find_element_by_name("add").click()
+        time.sleep(0.5)
+        # self.return_homepage()
+        self.contact_cache = None
+
+
+    def remove_contact_from_group(self, contact, group):
+        wd = self.app.wd
+        self.app.open_home_page()
+
+        Select(wd.find_element_by_name("group")).select_by_value(str(group))
+        self.select_deletable_contact_by_id(contact)
+        wd.find_element_by_name("remove").click()
+        self.contact_cache = None
+
+
 
 
 

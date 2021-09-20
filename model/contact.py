@@ -35,9 +35,7 @@ class Contact:
 
     def __eq__(self, other):
         return (self.id is None or other.id is None or self.id == other.id) and self.lastname == other.lastname and \
-               self.name == other.name and self.address == other.address and \
-               self.all_phones_from_home_page == other.all_phones_from_home_page and \
-               self.all_emails_from_home_page == other.all_emails_from_home_page
+               self.name == other.name and self.address == other.address #
         # для сравнения НЕ ФИЗ АДРЕСОВ объектов, а ЛОГИЧ сравнение (тк внешне могут быть идентичными, но разными оюъектами с разными адресами в оперативке)
                                                                  # (см ролик 4_2 compare_lists)
 
