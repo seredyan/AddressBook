@@ -1,9 +1,11 @@
+import random
 
 import pymysql.cursors
 from model.group import Group
 from model.contact import Contact
 import re
-
+from fixture.orm import ORMFixture
+orm = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="")
 
 
 class DbFixture:
@@ -62,34 +64,59 @@ class DbFixture:
                 contacts.append(id)
                 groups.append(group_id)
 
-
         finally:
             cursor.close()
         return data#, contacts, groups
 
 
-    def get_contact_list_by_id(self):
-        contacts = []
-        cursor = self.connection.cursor()
-        try:
-            cursor.execute("select id from addressbook where deprecated='0000-00-00 00:00:00'")
-            for row in cursor:
-                contacts.append(row)
-        finally:
-            cursor.close()
-        return contacts
+    def get_selected_groups_and_contacts(self):
+        groups = self.get_group_list()
+        all_contacts = self.get_contact_list()
+        selected_groups = []
+        for group in groups:
+            if len(orm.get_contacts_in_group(group)) < len(all_contacts):
+                selected_groups.append(group)
+
+        selected_group = random.choice(selected_groups)
+        selected_contacts = orm.get_contacts_not_in_group(selected_group)
+        selected_contact = random.choice(selected_contacts)
+        return [selected_group.id, selected_contact.id]
 
 
-    def get_group_list_by_id(self):
-        groups = []
-        cursor = self.connection.cursor()
-        try:
-            cursor.execute("select group_id from group_list where deprecated='0000-00-00 00:00:00'")
-            for row in cursor:
-                groups.append(row)
-        finally:
-            cursor.close()
-        return groups
+    def check_available_parameters(self, app):
+        if self.get_group_list() == []:
+            app.group.create(Group(name='test'))
+        if self.get_contact_list() == []:
+            app.contact.create(Contact(name='test'))
+
+        test_data = self.get_data_address_in_groups()
+        all_contacts = self.get_contact_list()
+        all_groups = self.get_group_list()
+        if len(test_data) == (len(all_contacts)) * (len(all_groups)):
+            app.contact.create(Contact(name='aa', lastname='bb'))
+
+    # def get_contact_list_by_id(self):
+    #     contacts = []
+    #     cursor = self.connection.cursor()
+    #     try:
+    #         cursor.execute("select id from addressbook where deprecated='0000-00-00 00:00:00'")
+    #         for row in cursor:
+    #             contacts.append(row)
+    #     finally:
+    #         cursor.close()
+    #     return contacts
+
+    #
+    # def get_group_list_by_id(self):
+    #     groups = []
+    #     cursor = self.connection.cursor()
+    #     try:
+    #         cursor.execute("select group_id from group_list where deprecated='0000-00-00 00:00:00'")
+    #         for row in cursor:
+    #             groups.append(row)
+    #     finally:
+    #         cursor.close()
+    #     return groups
 
 
 
