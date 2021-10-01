@@ -101,10 +101,10 @@ class ContactHelper:
         # time.sleep(1)
 
     ##*************************
-        # all_options = wd.find_elements_by_tag_name("option")  # на случай выбора случайной группы из выпадающего списка
-        # random.choice(all_options).click()  # на случай выбора случайной группы из выпадающего списка
-        # time.sleep(6)
-        # ##
+        # element = wd.find_element_by_name("to_group")  # на случай выбора случайной группы из выпадающего списка
+        # all_options = element.find_elements_by_tag_name("option")
+        # random.choice(all_options).click()
+
         # Select(wd.find_element_by_name("to_group")).select_by_visible_text('Second') # пример добавления в конкретную группу(если она есть в списке)
     ###*************************
 
