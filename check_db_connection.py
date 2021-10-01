@@ -8,14 +8,14 @@ dbase = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="
 
 
 
-# # db groups connection
-# try:
-#     l = dbase.get_group_list()
-#     for item in l:
-#         print(item)
-#     print(len(l))
-# finally:
-#     pass   # dbase.destroy()   # orm фвтоматически закроет соединение с БД
+# db groups connection
+try:
+    l = dbase.get_group_list()
+    for item in l:
+        print(item)
+    print(len(l))
+finally:
+    pass   # dbase.destroy()   # orm фвтоматически закроет соединение с БД
 
 
 
@@ -41,11 +41,11 @@ dbase = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="
 #     pass   # dbase.destroy()   # orm фвтоматически закроет соединение с БД
 
 
-# db contacts_in_group  connection
-try:
-    l = dbase.get_contacts_not_in_group(Group(id="1003"))  # выдать все контакты, не входящие в эту группу
-    for item in l:
-        print(item)
-    print(len(l))
-finally:
-    pass   # dbase.destroy()   # orm фвтоматически закроет соединение с БД
+### db contacts_in_group  connection
+# try:
+#     l = dbase.get_contacts_not_in_group(Group(id="1003"))  # выдать все контакты, не входящие в эту группу
+#     for item in l:
+#         print(item)
+#     print(len(l))
+# finally:
+#     pass   # dbase.destroy()   # orm фвтоматически закроет соединение с БД
