@@ -18,6 +18,8 @@ toml
 urllib3
 wheel
 
+allure-pytest
+
 
 
 

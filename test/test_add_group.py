@@ -1,27 +1,66 @@
 # -*- coding: utf-8 -*-
 
 from model.group import Group
+import pytest
+import allure
 
 
- 
 
 
-def test_add_group(app, db, json_groups, check_ui):  # осущ связь тестовых ф-й с данными, хранящимися в файлах в формате json
-
+### USING ALLURE REPORT ####
+def test_add_group(app, db, json_groups, check_ui): # generate reports by allure
     added_group = json_groups
-    old_groups = db.get_group_list()
-    app.group.create(added_group)
+    with allure.step('Given a group list'):
+        old_groups = db.get_group_list()
 
-    # assert len(old_groups) + 1 == app.group.count() # исп метод group.count вместо создания нового списка (для ускорения) и проверки условий для след assert
-    # этот assert уже не нужен, тк берем данные уже с БД
+    with allure.step('When I add a group %s to the list' % added_group):
+        app.group.create(added_group)
+
+    with allure.step('Then the new group list is equal to the old list with the added group'):
+
+        # assert len(old_groups) + 1 == app.group.count() # исп метод group.count вместо создания нового списка (для ускорения) и проверки условий для след assert
+        # этот assert уже не нужен, тк берем данные уже с БД
 
 
-    new_groups = db.get_group_list()
-    old_groups.append(added_group)
-    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max) # сравнение соответствия физичского НАЛИЯЧИЯ той или иной группы
+        new_groups = db.get_group_list()
+        old_groups.append(added_group)
+        assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max) # сравнение соответствия физичского НАЛИЯЧИЯ той или иной группы
 
-    if check_ui:
-        assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
+        if check_ui:
+            assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def test_add_group(app, db, json_groups, check_ui):  # осущ связь тестовых ф-й с данными, хранящимися в файлах в формате json
+#
+#     added_group = json_groups
+#     old_groups = db.get_group_list()
+#     app.group.create(added_group)
+#
+#     # assert len(old_groups) + 1 == app.group.count() # исп метод group.count вместо создания нового списка (для ускорения) и проверки условий для след assert
+#     # этот assert уже не нужен, тк берем данные уже с БД
+#
+#
+#     new_groups = db.get_group_list()
+#     old_groups.append(added_group)
+#     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max) # сравнение соответствия физичского НАЛИЯЧИЯ той или иной группы
+#
+#     if check_ui:
+#         assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
 
 
 
