@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from contact_app import Application
+from application import Application
 import pytest
 from contact import Contact
 
@@ -12,7 +12,7 @@ def app(request):
 
 
 def test_new_contact(app):
-    app.login(user="admin", password="secret")
+    app.login(username="admin", password="secret")
     app.create_contact(Contact(name="Georg",
                                     lastname="Wells", address="Lenina St, 10-11\nVoronezh, Russia",
                                     landphone="555555555", mobile="77777777777", email="dd@mail.ru"))
