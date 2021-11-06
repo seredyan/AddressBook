@@ -6,15 +6,28 @@ from fixture.contact import ContactHelper
 
 class Application:
 
-    def __init__(self, browser, base_url):     # запуск браузера через этот конструктор
+    def __init__(self, browser, base_url, headless):     # запуск браузера через этот конструктор
+
         if browser == "firefox":
-            self.wd = webdriver.Firefox()
+            options = webdriver.FirefoxOptions()
+            if headless: options.headless = True
+            self.wd = webdriver.Firefox(options=options)
         elif browser == "chrome":
-            self.wd = webdriver.Chrome()
+            options = webdriver.ChromeOptions()
+            if headless: options.headless = True
+            self.wd = webdriver.Chrome(options=options)
         elif browser == "edge":
             self.wd = webdriver.Edge()
         elif browser == "opera":
             self.wd = webdriver.Opera()
+        # if browser == "firefox":
+        #     self.wd = webdriver.Firefox()
+        # elif browser == "chrome":
+        #     self.wd = webdriver.Chrome()
+        # elif browser == "edge":
+        #     self.wd = webdriver.Edge()
+        # elif browser == "opera":
+        #     self.wd = webdriver.Opera()
         else:
             raise ValueError("Unrecognized browser %s" % browser)
         # self.wd.implicitly_wait(3)

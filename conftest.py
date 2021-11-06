@@ -26,14 +26,14 @@ def load_config(file):
 
 
 
-
 @pytest.fixture
 def app(request):
     global fixture
     browser = request.config.getoption("--browser")
     web_config = load_config(request.config.getoption("--target"))['web']
+    headless = request.config.getoption("--headless")
     if fixture is None or not fixture.is_valid():
-        fixture = Application(browser=browser, base_url=web_config['baseUrl'])
+        fixture = Application(browser=browser, base_url=web_config['baseUrl'], headless=headless)
     fixture.session.ensure_login(username=web_config['username'], password=web_config['password'])
     return fixture
 
@@ -67,6 +67,7 @@ def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="target.json")
     parser.addoption("--check_ui", action="store_true") # значение опции автоматич ук True, если она есть, и False, если ее нет
+    parser.addoption("--headless", action="store_true", help="Run headless")
 
 
 def pytest_generate_tests(metafunc):
